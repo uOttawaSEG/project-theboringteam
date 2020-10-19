@@ -14,7 +14,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,37 +31,37 @@ public class MainActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.password);
         mBtnSignUp = findViewById(R.id.btnSignUp);
         mBtnSignIn = findViewById(R.id.btnSignIn);
+        mAuth = FirebaseAuth.getInstance();
 
         mBtnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = mEmail.getText().toString();
                 String pwd = mPassword.getText().toString();
+                if (pwd.isEmpty()) {
+                    mPassword.setError("Please enter your password");
+                    mPassword.requestFocus();
+                }
                 if (email.isEmpty()) {
                     mEmail.setError("Please enter your email");
                     mPassword.requestFocus();
-                } else if (pwd.isEmpty()) {
-                    mPassword.setError("Please enter your password");
-                    mPassword.requestFocus();
-                } else if (email.isEmpty() && pwd.isEmpty()) {
-                    toastMessage("Fields are empty");
-                } else if (!email.isEmpty() && !pwd.isEmpty()) {
+                }
+                if (email.isEmpty() || pwd.isEmpty()) {
+                    toastMessage("Field(s) are empty");
+                }  else {
+
                     mAuth.signInWithEmailAndPassword(email, pwd)
                             .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        Intent i = new Intent(MainActivity.this, WelcomeScreen.class);
-                                        startActivity(i);
+                                        startActivity(new Intent(MainActivity.this, WelcomeScreen.class));
                                     } else {
                                         toastMessage("Login error.");
                                     }
                                 }
                             });
-                } else {
-                    toastMessage("An error has occurred.");
                 }
-                ;
             }
         });
         mBtnSignUp.setOnClickListener(new View.OnClickListener() {

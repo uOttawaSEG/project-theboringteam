@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class SignupActivityCustomer extends AppCompatActivity {
@@ -23,6 +23,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
     public Button mBtnSignUp, mBtnBack;
     public boolean canSignIn;
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
     private UserProfileChangeRequest.Builder builder;
 
     @Override
@@ -32,9 +33,11 @@ public class SignupActivityCustomer extends AppCompatActivity {
 
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
-        mBtnSignUp = findViewById(R.id.btnSignIn);
+        mUsername = findViewById(R.id.Username);
+        mBtnSignUp = findViewById(R.id.btnSignUp);
         mBtnBack = findViewById(R.id.btnBack);
-        canSignIn = true;
+        mAuth = FirebaseAuth.getInstance();
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -44,6 +47,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
                 String email = mEmail.getText().toString();
                 String pass = mPassword.getText().toString();
                 String name = mUsername.getText().toString();
+                canSignIn = true;
 
                 if (email.isEmpty()){
                     mEmail.setError("Please enter your email");
@@ -55,7 +59,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
                     mPassword.requestFocus();
                     canSignIn = false;
                 }
-                for(int i = 0; i<name.length();i++) {
+                for(int i = 0; i < (name.length() - 1); i++) {
                     if (!Character.isLetter(name.charAt(i)) || (name.charAt(i) == ' ')) {
                         mUsername.setError("Please enter an actual name");
                         mUsername.requestFocus();
@@ -78,14 +82,15 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        toastMessage("New account created!");
-                                        builder = new UserProfileChangeRequest.Builder();
                                         String name = mUsername.getText().toString();
+                                        user = mAuth.getCurrentUser();
+                                        builder = new UserProfileChangeRequest.Builder();
                                         builder.setDisplayName(name+" Customer");
-                                        Intent intToHomeActivity = new Intent(SignupActivityCustomer.this, WelcomeScreen.class);
-                                        startActivity(intToHomeActivity);
+                                        user.updateProfile(builder.build());
+                                        toastMessage("New account created!");
+                                        startActivity(new Intent(SignupActivityCustomer.this, WelcomeScreen.class));
                                     }
-                                    if (!task.isSuccessful()){
+                                    else {
                                         toastMessage("Sign up unsuccessful.");
                                     }
                                 }
