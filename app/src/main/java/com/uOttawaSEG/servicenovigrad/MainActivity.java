@@ -63,37 +63,34 @@ public class MainActivity extends AppCompatActivity {
                                             if admin
                                                 redirect to the admin page
                                         */
-                                        if(/*employee*/) {
+                                        if (/*employee*/) {
                                             /* gets username*/
                                             // Here it is determined whether the Welcome Screen will log them in as employee or customer
                                             Intent i = new Intent(MainActivity.this, WelcomeScreen.class);
                                             startActivity(i);
-                                        }
-                                        else if(/*customer*/){
+                                        } else if (/*customer*/) {
                                             /*gets username*/
                                             Intent k = new Intent(MainActivity.this, WelcomeScreen.class);
                                             startActivity(k);
-                                    }
-                                    else{
-                                        toastMessage("Login error.");
+                                        } else {
+                                            toastMessage("Login error.");
+                                        };
                                     }
                                 }
-                            });
+                        });
                 }else {
                     toastMessage("An error has occurred.");
-                }
+                };
             }
         });
-
         mBtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, chooseTypeActivity.class));
+                startActivity(new Intent(MainActivity.this, ChooseTypeActivity.class));
             }
         });
     }
-    //Customizable toast message maker
-    private void toastMessage(String message){
+//Customizable toast message maker
+private void toastMessage(String message){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
-    }
 }
