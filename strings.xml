@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Service Novigrad</string>
+    <string-array name="users">
+    <item>Employee</item>
+    <item>Customer</item>
+    </string-array>
+</resources>
