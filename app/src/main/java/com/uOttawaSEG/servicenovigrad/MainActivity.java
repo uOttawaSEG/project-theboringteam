@@ -63,6 +63,16 @@ public class MainActivity extends AppCompatActivity {
                                             if admin
                                                 redirect to the admin page
                                         */
+                                        if(/*employee*/) {
+                                            /* gets username*/
+                                            // Here it is determined whether the Welcome Screen will log them in as employee or customer
+                                            Intent i = new Intent(MainActivity.this, WelcomeScreen.class);
+                                            startActivity(i);
+                                        }
+                                        else if(/*customer*/){
+                                            /*gets username*/
+                                            Intent k = new Intent(MainActivity.this, WelcomeScreen.class);
+                                            startActivity(k);
                                     }
                                     else{
                                         toastMessage("Login error.");
@@ -72,15 +82,13 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     toastMessage("An error has occurred.");
                 }
-                Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(i);
             }
         });
 
         mBtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //redirect to choosetypeActivity
+                startActivity(new Intent(MainActivity.this, chooseTypeActivity.class));
             }
         });
     }
@@ -88,5 +96,4 @@ public class MainActivity extends AppCompatActivity {
     private void toastMessage(String message){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
-
 }

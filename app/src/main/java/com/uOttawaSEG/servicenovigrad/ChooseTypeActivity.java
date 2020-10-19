@@ -18,7 +18,8 @@ public class ChooseTypeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choosetype_1);
+
+        setContentView(R.layout.activity_choosetype_l);
 
         mBtnBack = (Button) findViewById(R.id.btnBack);
         mBtnBack.setOnClickListener(new View.OnClickListener() {
