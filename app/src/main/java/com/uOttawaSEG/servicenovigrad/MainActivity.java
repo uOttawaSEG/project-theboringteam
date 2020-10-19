@@ -38,49 +38,31 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = mEmail.getText().toString();
                 String pwd = mPassword.getText().toString();
-                if (email.isEmpty()){
+                if (email.isEmpty()) {
                     mEmail.setError("Please enter your email");
                     mPassword.requestFocus();
-                }
-                else if (pwd.isEmpty()){
+                } else if (pwd.isEmpty()) {
                     mPassword.setError("Please enter your password");
                     mPassword.requestFocus();
-                }
-                else if(email.isEmpty() && pwd.isEmpty()){
+                } else if (email.isEmpty() && pwd.isEmpty()) {
                     toastMessage("Fields are empty");
-                }
-                else if (!email.isEmpty() && !pwd.isEmpty()) {
+                } else if (!email.isEmpty() && !pwd.isEmpty()) {
                     mAuth.signInWithEmailAndPassword(email, pwd)
                             .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        /*check if employee or customer then redirects them to their respective classes
-                                            if employee
-                                                get the username using getUsername and redirect to helloEmployee class
-                                            if customer
-                                                get the username using getUsername and redirect to helloCustomer class
-                                            if admin
-                                                redirect to the admin page
-                                        */
-                                        if (/*employee*/) {
-                                            /* gets username*/
-                                            // Here it is determined whether the Welcome Screen will log them in as employee or customer
-                                            Intent i = new Intent(MainActivity.this, WelcomeScreen.class);
-                                            startActivity(i);
-                                        } else if (/*customer*/) {
-                                            /*gets username*/
-                                            Intent k = new Intent(MainActivity.this, WelcomeScreen.class);
-                                            startActivity(k);
-                                        } else {
-                                            toastMessage("Login error.");
-                                        };
+                                        Intent i = new Intent(MainActivity.this, WelcomeScreen.class);
+                                        startActivity(i);
+                                    } else {
+                                        toastMessage("Login error.");
                                     }
                                 }
-                        });
-                }else {
+                            });
+                } else {
                     toastMessage("An error has occurred.");
-                };
+                }
+                ;
             }
         });
         mBtnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +72,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-//Customizable toast message maker
-private void toastMessage(String message){
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+
+    //Customizable toast message maker
+    private void toastMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }
