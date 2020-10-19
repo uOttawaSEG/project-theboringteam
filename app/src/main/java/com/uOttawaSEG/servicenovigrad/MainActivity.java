@@ -16,10 +16,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
 public class MainActivity extends AppCompatActivity {
     public EditText mEmail, mPassword;
     public Button mBtnSignUp, mBtnSignIn;
     private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,16 @@ public class MainActivity extends AppCompatActivity {
                                             if admin
                                                 redirect to the admin page
                                         */
+                                        if(/*employee*/) {
+                                            /* gets username*/
+                                            // Here it is determined whether the Welcome Screen will log them in as employee or customer
+                                            Intent i = new Intent(MainActivity.this, WelcomeScreen.class);
+                                            startActivity(i);
+                                        }
+                                        else if(/*customer*/){
+                                            /*gets username*/
+                                            Intent k = new Intent(MainActivity.this, WelcomeScreen.class);
+                                            startActivity(k);
                                     }
                                     else{
                                         toastMessage("Login error.");
@@ -76,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         mBtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ChooseTypeActivity.class));
+                startActivity(new Intent(MainActivity.this, chooseTypeActivity.class));
             }
         });
     }
