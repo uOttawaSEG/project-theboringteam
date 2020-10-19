@@ -83,7 +83,7 @@
         android:layout_marginTop="10dp"
         android:background="#000000"
         android:fontFamily="sans-serif-condensed-light"
-        android:text="Back"
+        android:text="Back to Sign in"
         android:textColor="#FFFFFF" />
 
 </RelativeLayout>

@@ -26,7 +26,7 @@ public class chooseTypeActivity extends AppCompatActivity {
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                //links to MainActivity
             }
         });
 
@@ -34,13 +34,13 @@ public class chooseTypeActivity extends AppCompatActivity {
         mBtnCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(chooseTypeActivity.this, SignupActivityCustomer.class));
+                //redirect to signupActivityCustomer
         });
         mBtnEmployee= (Button) findViewById(R.id.btnEmployee);
         mBtnEmployee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(chooseTypeActivity.this, SignupActivityEmployee.class));
+                //redirecting to signupActivityEmployee
             }
         });
     }

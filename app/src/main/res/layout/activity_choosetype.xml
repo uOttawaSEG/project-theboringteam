@@ -57,7 +57,7 @@
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
         android:fontFamily="sans-serif-condensed-light"
-        android:text="Back"
+        android:text="Back To Sign In"
         android:background="#000000"
         android:textColor="#FFFFFF" />
 

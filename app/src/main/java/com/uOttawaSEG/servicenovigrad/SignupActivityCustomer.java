@@ -84,7 +84,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
         mbtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                //directs to MainActivity
             }
         });
     }
