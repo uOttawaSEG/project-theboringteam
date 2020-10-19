@@ -17,7 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
-public class SignupActivityEmployee extends AppCompatActivity {
+public class SignupActivityCustomer extends AppCompatActivity {
 
     public EditText mEmail, mPassword, mUsername;
     public Button mBtnSignUp, mBtnBack;
@@ -74,7 +74,7 @@ public class SignupActivityEmployee extends AppCompatActivity {
                 }
                 if(canSignIn) {
                     mAuth.createUserWithEmailAndPassword(email,pass)
-                            .addOnCompleteListener(SignupActivityEmployee.this, new OnCompleteListener<AuthResult>() {
+                            .addOnCompleteListener(SignupActivityCustomer.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     Log.d("createUser","Success");
@@ -83,7 +83,7 @@ public class SignupActivityEmployee extends AppCompatActivity {
                                         toastMessage("New account created!");
                                         builder = new UserProfileChangeRequest.Builder();
                                         builder.setDisplayName(name+" Customer");
-                                        Intent intToHomeActivity = new Intent(SignupActivityEmployee.this, WelcomeScreen.class);
+                                        Intent intToHomeActivity = new Intent(SignupActivityCustomer.this, WelcomeScreen.class);
                                         startActivity(intToHomeActivity);
                                     }
                                     if (!task.isSuccessful()){
