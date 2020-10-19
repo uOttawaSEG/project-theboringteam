@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         mBtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //redirect to choosetypeActivity
+                startActivity(new Intent(MainActivity.this, chooseTypeActivity.class));
             }
         });
     }
