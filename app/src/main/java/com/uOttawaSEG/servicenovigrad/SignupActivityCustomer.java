@@ -30,9 +30,10 @@ public class SignupActivityCustomer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_customer);
 
+        mUsername = findViewById(R.id.username);
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
-        mBtnSignUp = findViewById(R.id.btnSignIn);
+        mBtnSignUp = findViewById(R.id.btnSignUp);
         mBtnBack = findViewById(R.id.btnBack);
         canSignIn = true;
 
@@ -44,6 +45,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
                 String email = mEmail.getText().toString();
                 String pass = mPassword.getText().toString();
                 String name = mUsername.getText().toString();
+                Log.d("btnSignupClicked", "succeess");
 
                 if (email.isEmpty()){
                     mEmail.setError("Please enter your email");

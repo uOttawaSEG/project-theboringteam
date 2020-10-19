@@ -10,7 +10,7 @@
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/Username"
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/email"
@@ -72,7 +72,7 @@
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:layout_marginBottom="60dp"
-        android:layout_above="@+id/Username"
+        android:layout_above="@+id/username"
         android:layout_centerHorizontal="true"
         android:textStyle="bold|italic" />
 
