@@ -43,11 +43,11 @@ public class SignupActivityEmployee extends AppCompatActivity {
             public void onClick(View v) {
                 String email = mEmail.getText().toString();
                 String pass = mPassword.getText().toString();
-                final String name = mUsername.getText().toString();
+                String name = mUsername.getText().toString();
 
                 if (email.isEmpty()){
                     mEmail.setError("Please enter your email");
-                    mPassword.requestFocus();
+                    mEmail.requestFocus();
                     canSignIn = false;
                 }
                 if (pass.length()<8 || pass.length() > 32){
@@ -57,15 +57,15 @@ public class SignupActivityEmployee extends AppCompatActivity {
                 }
                 for(int i = 0; i<name.length();i++) {
                     if (!Character.isLetter(name.charAt(i)) || (name.charAt(i) == ' ')) {
-                        mPassword.setError("Please enter an actual name");
-                        mPassword.requestFocus();
+                        mUsername.setError("Please enter an actual name");
+                        mUsername.requestFocus();
                         canSignIn = false;
                         break;
                     }
                 }
                 if(name.isEmpty()){
-                    mPassword.setError("Please enter an actual name");
-                    mPassword.requestFocus();
+                    mUsername.setError("Input Name");
+                    mUsername.requestFocus();
                     canSignIn = false;
                 }
                 if(email.isEmpty() || pass.isEmpty() || name.isEmpty()){
@@ -77,17 +77,15 @@ public class SignupActivityEmployee extends AppCompatActivity {
                             .addOnCompleteListener(SignupActivityEmployee.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    Log.d("createUser","Success");
                                     if (task.isSuccessful()) {
-                                        Log.d("createUserTask","Success");
                                         toastMessage("New account created!");
                                         builder = new UserProfileChangeRequest.Builder();
+                                        String name = mUsername.getText().toString();
                                         builder.setDisplayName(name+" Employee");
                                         Intent intToHomeActivity = new Intent(SignupActivityEmployee.this, WelcomeScreen.class);
                                         startActivity(intToHomeActivity);
                                     }
                                     if (!task.isSuccessful()){
-                                        task.getException().printStackTrace();
                                         toastMessage("Sign up unsuccessful.");
                                     }
                                 }
@@ -97,11 +95,7 @@ public class SignupActivityEmployee extends AppCompatActivity {
                     toastMessage("An error has occurred. Please try again!");
                 }
             }
-
-            private void toastMessage(String s) {
-            }
         });
-
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,5 +103,7 @@ public class SignupActivityEmployee extends AppCompatActivity {
             }
         });
     }
-
+    private void toastMessage(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
 }

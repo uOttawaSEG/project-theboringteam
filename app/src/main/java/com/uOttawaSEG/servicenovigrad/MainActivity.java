@@ -72,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     toastMessage("An error has occurred.");
                 }
-                Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(i);
             }
         });
 
@@ -88,5 +86,4 @@ public class MainActivity extends AppCompatActivity {
     private void toastMessage(String message){
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
-
 }
