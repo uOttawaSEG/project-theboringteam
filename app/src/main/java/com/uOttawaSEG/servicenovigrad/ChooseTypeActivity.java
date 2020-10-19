@@ -1,8 +1,6 @@
 package com.uOttawaSEG.servicenovigrad;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,14 +11,14 @@ import android.widget.Toast;
 import android.util.Log;
 import java.util.ArrayList;
 
-public class chooseTypeActivity extends AppCompatActivity {
+public class ChooseTypeActivity extends AppCompatActivity {
     public Button  mBtnBack, mBtnCustomer, mBtnEmployee;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choosetype);
+        setContentView(R.layout.activity_choosetype_l);
 
         mBtnBack = (Button) findViewById(R.id.btnBack);
         mBtnBack.setOnClickListener(new View.OnClickListener() {
@@ -34,13 +32,14 @@ public class chooseTypeActivity extends AppCompatActivity {
         mBtnCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(chooseTypeActivity.this, SignupActivityCustomer.class));
+                startActivity(new Intent(ChooseTypeActivity.this, SignupActivityCustomer.class));
+            }
         });
-        mBtnEmployee= (Button) findViewById(R.id.btnEmployee);
+        mBtnEmployee= findViewById(R.id.btnEmployee);
         mBtnEmployee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(chooseTypeActivity.this, SignupActivityEmployee.class));
+                startActivity(new Intent(ChooseTypeActivity.this, SignupActivityEmployee.class));
             }
         });
     }

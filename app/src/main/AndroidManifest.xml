@@ -13,9 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WelcomeScreen"></activity>
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +20,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SignupActivityEmployee" />
+        <activity android:name=".SignupActivityCustomer" />
+        <activity android:name=".ChooseTypeActivity" />
+        <activity android:name=".signup" />
+        <activity android:name=".activitity_choose_type" />
+        <activity android:name=".WelcomeScreen" />
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".LoginActivity" />
     </application>
 
 </manifest>

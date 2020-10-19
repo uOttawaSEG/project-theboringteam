@@ -16,12 +16,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
 public class MainActivity extends AppCompatActivity {
     public EditText mEmail, mPassword;
     public Button mBtnSignUp, mBtnSignIn;
     private FirebaseAuth mAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         mBtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, chooseTypeActivity.class));
+                startActivity(new Intent(MainActivity.this, ChooseTypeActivity.class));
             }
         });
     }
