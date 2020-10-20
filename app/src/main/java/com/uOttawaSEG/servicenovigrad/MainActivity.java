@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         startActivity(new Intent(MainActivity.this, WelcomeScreen.class));
                                     } else {
-                                        toastMessage("Login error.");
+                                        toastMessage("Login information not found in database. Check fields again!");
                                     }
                                 }
                             });

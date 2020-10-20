@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,13 +28,13 @@ public class SignupActivityEmployee extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acivity_signup_employee);
+        setContentView(R.layout.activity_signup_customer);
 
+        mUsername = findViewById(R.id.username);
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
         mBtnSignUp = findViewById(R.id.btnSignUp);
         mBtnBack = findViewById(R.id.btnBack);
-        mAuth = FirebaseAuth.getInstance();
         canSignIn = true;
 
         mAuth = FirebaseAuth.getInstance();
@@ -44,6 +45,7 @@ public class SignupActivityEmployee extends AppCompatActivity {
                 String email = mEmail.getText().toString();
                 String pass = mPassword.getText().toString();
                 String name = mUsername.getText().toString();
+                Log.d("btnSignupClicked", "succeess");
 
                 if (email.isEmpty()){
                     mEmail.setError("Please enter your email");
@@ -82,6 +84,7 @@ public class SignupActivityEmployee extends AppCompatActivity {
                                         builder = new UserProfileChangeRequest.Builder();
                                         String name = mUsername.getText().toString();
                                         builder.setDisplayName(name+" Employee");
+                                        Log.d("afterBuildertest", builder.getDisplayName());
                                         Intent intToHomeActivity = new Intent(SignupActivityEmployee.this, WelcomeScreen.class);
                                         startActivity(intToHomeActivity);
                                     }

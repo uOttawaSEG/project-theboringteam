@@ -54,12 +54,5 @@ public class WelcomeScreen extends AppCompatActivity {
                 startActivity(new Intent(WelcomeScreen.this, MainActivity.class));
             }
         });
-
-
-
-
-
-
-
     }
 }
