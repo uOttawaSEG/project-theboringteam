@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class SignupActivityCustomer extends AppCompatActivity {
@@ -23,7 +24,8 @@ public class SignupActivityCustomer extends AppCompatActivity {
     public Button mBtnSignUp, mBtnBack;
     public boolean canSignIn;
     private FirebaseAuth mAuth;
-    private UserProfileChangeRequest.Builder builder;
+    private UserProfileChangeRequest builder;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
         mBtnSignUp = findViewById(R.id.btnSignUp);
         mBtnBack = findViewById(R.id.btnBack);
         canSignIn = true;
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -81,9 +84,11 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         toastMessage("New account created!");
-                                        builder = new UserProfileChangeRequest.Builder();
                                         String name = mUsername.getText().toString();
-                                        builder.setDisplayName(name+" Customer");
+                                        builder = new UserProfileChangeRequest.Builder().setDisplayName(name+" Customer").build();
+                                        mAuth.getInstance().getCurrentUser().updateProfile(builder);
+                                        //builder.setDisplayName(name+" Customer");
+                                        Log.d("accountCreated",builder.getDisplayName());
                                         Intent intToHomeActivity = new Intent(SignupActivityCustomer.this, WelcomeScreen.class);
                                         startActivity(intToHomeActivity);
                                     }

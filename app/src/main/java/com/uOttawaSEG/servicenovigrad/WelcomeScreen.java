@@ -6,17 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 public class WelcomeScreen extends AppCompatActivity {
 
     public TextView welcomeName, welcomeType;
     public Button logOut;
     public String[] nametype;
-    public String name,type;
+    public String typenameString,name,type;
     private FirebaseAuth mAuth;
 
     @Override
@@ -27,9 +28,22 @@ public class WelcomeScreen extends AppCompatActivity {
         welcomeName = findViewById(R.id.welcomeMessageName);
         welcomeType = findViewById(R.id.welcomeMessage);
         logOut = findViewById(R.id.btnLogout);
-        nametype = mAuth.getCurrentUser().getDisplayName().split(" ");
-        name = "Welcome " + nametype[0] + "!";
-        type = "You are signed in as " + nametype[1] + ".";
+        mAuth = FirebaseAuth.getInstance();
+        typenameString = (mAuth.getCurrentUser()).getDisplayName();
+
+        if(mAuth.getCurrentUser() == null){
+            name= "poop!";
+            type = "poopy!";
+        }
+        else if((mAuth.getCurrentUser()).getDisplayName() != null){
+            nametype = Objects.requireNonNull(typenameString.split(" "));
+            name = "Welcome " + nametype[0] + "!";
+            type = "You are signed in as " + nametype[1] + ".";
+        }
+        else{
+            name= "Welcome!";
+            type = "You are signed in";
+        }
 
         welcomeName.setText(name);
         welcomeType.setText(type);
