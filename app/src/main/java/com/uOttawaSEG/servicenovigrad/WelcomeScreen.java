@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ public class WelcomeScreen extends AppCompatActivity {
     public Button logOut;
     public String[] nametype;
     public String typenameString,name,type;
-    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +29,15 @@ public class WelcomeScreen extends AppCompatActivity {
         welcomeName = findViewById(R.id.welcomeMessageName);
         welcomeType = findViewById(R.id.welcomeMessage);
         logOut = findViewById(R.id.btnLogout);
-        mAuth = FirebaseAuth.getInstance();
-        typenameString = (mAuth.getCurrentUser()).getDisplayName();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        typenameString = currentUser.getDisplayName();
 
-        if(mAuth.getCurrentUser() == null){
+
+        if(currentUser == null){
             name= "poop!";
             type = "poopy!";
         }
-        else if((mAuth.getCurrentUser()).getDisplayName() != null){
+        else if(typenameString != null){
             nametype = Objects.requireNonNull(typenameString.split(" "));
             name = "Welcome " + nametype[0] + "!";
             type = "You are signed in as " + nametype[1] + ".";

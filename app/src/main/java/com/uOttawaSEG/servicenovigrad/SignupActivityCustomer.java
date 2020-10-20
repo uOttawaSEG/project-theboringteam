@@ -24,8 +24,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
     public Button mBtnSignUp, mBtnBack;
     public boolean canSignIn;
     private FirebaseAuth mAuth;
-    private UserProfileChangeRequest builder;
-    private FirebaseUser user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,12 +84,18 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         toastMessage("New account created!");
                                         String name = mUsername.getText().toString();
-                                        builder = new UserProfileChangeRequest.Builder().setDisplayName(name+" Customer").build();
-                                        mAuth.getInstance().getCurrentUser().updateProfile(builder);
-                                        //builder.setDisplayName(name+" Customer");
-                                        Log.d("accountCreated",builder.getDisplayName());
-                                        Intent intToHomeActivity = new Intent(SignupActivityCustomer.this, WelcomeScreen.class);
-                                        startActivity(intToHomeActivity);
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(name+" customer")
+                                                .build();
+                                        user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    startActivity(new Intent(SignupActivityCustomer.this, WelcomeScreen.class));
+                                                }
+                                            }
+                                        });
                                     }
                                     if (!task.isSuccessful()){
                                         toastMessage("Sign up unsuccessful.");

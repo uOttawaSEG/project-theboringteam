@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class SignupActivityEmployee extends AppCompatActivity {
@@ -23,7 +24,7 @@ public class SignupActivityEmployee extends AppCompatActivity {
     public Button mBtnSignUp, mBtnBack;
     public boolean canSignIn;
     private FirebaseAuth mAuth;
-    private UserProfileChangeRequest.Builder builder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class SignupActivityEmployee extends AppCompatActivity {
         mBtnSignUp = findViewById(R.id.btnSignUp);
         mBtnBack = findViewById(R.id.btnBack);
         canSignIn = true;
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -81,12 +83,19 @@ public class SignupActivityEmployee extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         toastMessage("New account created!");
-                                        builder = new UserProfileChangeRequest.Builder();
                                         String name = mUsername.getText().toString();
-                                        builder.setDisplayName(name+" Employee");
-                                        Log.d("afterBuildertest", builder.getDisplayName());
-                                        Intent intToHomeActivity = new Intent(SignupActivityEmployee.this, WelcomeScreen.class);
-                                        startActivity(intToHomeActivity);
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(name+" employee")
+                                                .build();
+                                        user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    startActivity(new Intent(SignupActivityEmployee.this, WelcomeScreen.class));
+                                                }
+                                            }
+                                        });
                                     }
                                     if (!task.isSuccessful()){
                                         toastMessage("Sign up unsuccessful.");
