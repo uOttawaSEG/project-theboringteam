@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -20,6 +24,13 @@ public class WelcomeScreen extends AppCompatActivity {
     public String[] nametype;
     public String typenameString,name,type;
     private FirebaseUser currentUser;
+
+    // Get a reference to our posts
+    final FirebaseDatabase userDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference ref = userDatabase.getReference("service-novigrad-98386/Users");
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,5 +62,13 @@ public class WelcomeScreen extends AppCompatActivity {
                 startActivity(new Intent(WelcomeScreen.this, MainActivity.class));
             }
         });
+        // Attach a listener to read the data at our posts reference
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                System.out.println(user);
+            }
+        }
     }
 }
