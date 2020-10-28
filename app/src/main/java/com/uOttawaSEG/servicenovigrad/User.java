@@ -9,6 +9,13 @@ class User {
     public User(){
 
     }
+    public User(String id, String name, String email, String type){
+        _id = id;
+        _name = name;
+        _email = email;
+        _type = type;
+    }
+
 
     public void setId(String id) {
         _id = id;

@@ -67,7 +67,6 @@ public class WelcomeScreen extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
  /*       currentUser = new User();
-
         if(currentUser.getEmail() != null && currentUser.getName() != null && currentUser.getId() != null && currentUser.getType() != null){
             welcomeName.setText("Welcome " + currentUser.getName() + "!");
             welcomeType.setText("You are signed in as " + currentUser.getType() + ".");

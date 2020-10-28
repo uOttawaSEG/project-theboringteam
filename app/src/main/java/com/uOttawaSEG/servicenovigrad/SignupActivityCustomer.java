@@ -94,7 +94,6 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                         toastMessage("New account created!");
                                         String name = mUsername.getText().toString();
                                         String email = mEmail.getText().toString();
-<<<<<<< HEAD
 
                                         //FIREBASE STUFF
                                         FirebaseUser mUser = mAuth.getCurrentUser();
@@ -102,14 +101,11 @@ public class SignupActivityCustomer extends AppCompatActivity {
 
                                         //Creating a local user
                                         user = new User(mUser.getUid(),name,email,"customer");
-=======
                                         FirebaseUser muser = mAuth.getCurrentUser();
                                         mRef = mDB.getReference("Users/"+muser.getUid());
-
-
-                                        user = new Users(muser.getUid(),name,email,"customer");
+                                        
+                                        user = new User(muser.getUid(),name,email,"customer");
                                         mRef.setValue(user);
->>>>>>> d1402290294b6eb7c1f8fcd89fd5d43646fe2c6b
 
                                         //Setting the local user to firebase
                                         mRef.setValue(mUser.getUid());
