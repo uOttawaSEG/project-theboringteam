@@ -1,22 +1,14 @@
 package com.uOttawaSEG.servicenovigrad;
 
 import androidx.annotation.NonNull;
-<<<<<<< HEAD
-import androidx.annotation.Nullable;
-=======
->>>>>>> d1402290294b6eb7c1f8fcd89fd5d43646fe2c6b
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,22 +17,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Objects;
 
 public class WelcomeScreen extends AppCompatActivity {
 
     public TextView welcomeName, welcomeType;
     public Button logOut;
-<<<<<<< HEAD
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference usersDatabase;
     private String userid;
-=======
-    public String welcome, role;
-    private Users currentUser;
->>>>>>> d1402290294b6eb7c1f8fcd89fd5d43646fe2c6b
+
+    //public String welcome, role;
+    //private User currentUser;
 
 
     @Override
@@ -52,26 +40,12 @@ public class WelcomeScreen extends AppCompatActivity {
         welcomeType = findViewById(R.id.welcomeMessage);
         logOut = findViewById(R.id.btnLogout);
 
-<<<<<<< HEAD
         // ### FIREBASE STUFF ###
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         usersDatabase = mFirebaseDatabase.getReference();
         final FirebaseUser user = mAuth.getCurrentUser();
         userid = user.getUid();
-
-//        mAuthListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                FirebaseUser user = firebaseAuth.getCurrentUser();
-//                if (user != null){
-//                    //user is signed in
-//
-//                }else{
-//                    //user is signed out
-//                }
-//            }
-//        };
 
         usersDatabase.addValueEventListener(new ValueEventListener() { //gets called when there is a change in the database OR when the activity starts
             @Override
@@ -91,8 +65,8 @@ public class WelcomeScreen extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-=======
-        currentUser = new Users();
+
+ /*       currentUser = new User();
 
         if(currentUser.getEmail() != null && currentUser.getName() != null && currentUser.getId() != null && currentUser.getType() != null){
             welcomeName.setText("Welcome " + currentUser.getName() + "!");
@@ -117,11 +91,7 @@ public class WelcomeScreen extends AppCompatActivity {
             welcomeName.setText(welcome);
             welcomeType.setText(role);
         }
-
-
->>>>>>> d1402290294b6eb7c1f8fcd89fd5d43646fe2c6b
-
-            }
+*/}
         });
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,12 +99,9 @@ public class WelcomeScreen extends AppCompatActivity {
                 startActivity(new Intent(WelcomeScreen.this, MainActivity.class));
             }
         });
-<<<<<<< HEAD
-=======
     }
 
     private void toastMessage(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
->>>>>>> d1402290294b6eb7c1f8fcd89fd5d43646fe2c6b
     }
 }
