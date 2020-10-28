@@ -46,12 +46,6 @@ public class WelcomeScreen extends AppCompatActivity {
         userID = currentUser.getUid();
 
 
-        else if(typenameString != null){
-            nametype = Objects.requireNonNull(typenameString.split(" "));
-            name = "Welcome " + nametype[0] + "!";
-            type = "You are signed in as " + nametype[1] + ".";
-        }
-
         welcomeName.setText(name);
         welcomeType.setText(type);
 
@@ -61,13 +55,13 @@ public class WelcomeScreen extends AppCompatActivity {
                 startActivity(new Intent(WelcomeScreen.this, MainActivity.class));
             }
         });
-        // Attach a listener to read the data at our posts reference
+        /** Attach a listener to read the data at our posts reference
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
+                Users user = dataSnapshot.getValue(Users.class);
                 System.out.println(user);
             }
-        }
+        });*/
     }
 }
