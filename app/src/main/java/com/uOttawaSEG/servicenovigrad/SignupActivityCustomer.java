@@ -32,7 +32,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
     public DatabaseReference mRefChild;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDB;
-    private User user;
+    private Users user;
 
 
     @Override
@@ -103,7 +103,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                         FirebaseUser muser = mAuth.getCurrentUser();
 
 
-                                        user = new User(muser.getUid(),name,email,"customer");
+                                        user = new Users(muser.getUid(),name,email,"customer");
 
                                         mRef.setValue("UID", muser.getUid());
                                         mRefChild = mRef.child(muser.getUid());
