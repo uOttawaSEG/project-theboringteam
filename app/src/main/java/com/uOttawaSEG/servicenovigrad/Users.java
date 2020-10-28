@@ -1,6 +1,6 @@
 package com.uOttawaSEG.servicenovigrad;
 
-class User {
+class Users {
     private String _id;
     private String _name;
     private String _email;
