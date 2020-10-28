@@ -1,12 +1,16 @@
 package com.uOttawaSEG.servicenovigrad;
 
-class Users {
+class User {
     private String _id;
     private String _name;
     private String _email;
     private String _type;
 
-    public Users(String id, String name, String email, String type) {
+    public User(){
+
+    }
+
+    public User(String id, String name, String email, String type) {
         _id = id;
         _name = name;
         _email = email;

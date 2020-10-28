@@ -20,18 +20,15 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-
 public class SignupActivityCustomer extends AppCompatActivity {
 
     public EditText mEmail, mPassword, mUsername;
     public Button mBtnSignUp, mBtnBack;
     public boolean canSignIn;
-    public HashMap<String, String> infoHashMap;
     public DatabaseReference mRef;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDB;
-    private Users user;
+    private User user;
 
 
     @Override
@@ -46,7 +43,6 @@ public class SignupActivityCustomer extends AppCompatActivity {
         mBtnSignUp = findViewById(R.id.btnSignUp);
         mBtnBack = findViewById(R.id.btnBack);
         canSignIn = true;
-        infoHashMap = new HashMap<>();
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -98,21 +94,24 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                         toastMessage("New account created!");
                                         String name = mUsername.getText().toString();
                                         String email = mEmail.getText().toString();
-                                        FirebaseUser muser = mAuth.getCurrentUser();
+
+                                        //FIREBASE STUFF
+                                        FirebaseUser mUser = mAuth.getCurrentUser();
                                         mRef = mDB.getReference("Users");
 
+                                        //Creating a local user
+                                        user = new User(mUser.getUid(),name,email,"customer");
 
-                                        user = new Users(muser.getUid(),name,email,"customer");
-                                        mRef.setValue(muser.getUid());
+                                        //Setting the local user to firebase
+                                        mRef.setValue(mUser.getUid());
+                                        mRef.child(mUser.getUid()).setValue(user);
 
-                                        mRef.child(muser.getUid()).setValue(user);
-
-
+                                        //Old way of adding user type
                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(name+" customer")
                                                 .build();
 
-                                        muser.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        mUser.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
@@ -120,8 +119,6 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                                 }
                                             }
                                         });
-
-
                                     }
                                     if (!task.isSuccessful()){
                                         toastMessage("Sign up unsuccessful.");
