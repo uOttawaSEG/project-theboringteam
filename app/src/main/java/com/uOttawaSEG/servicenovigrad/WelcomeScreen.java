@@ -22,8 +22,9 @@ public class WelcomeScreen extends AppCompatActivity {
     public TextView welcomeName, welcomeType;
     public Button logOut;
     public String[] nametype;
-    public String userID,name,type;
+    public String typenameString,name,type;
     private FirebaseUser currentUser;
+
 
     // Get a reference to our posts
     final FirebaseDatabase userDatabase = FirebaseDatabase.getInstance();
@@ -37,14 +38,23 @@ public class WelcomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
 
-
-
         welcomeName = findViewById(R.id.welcomeMessageName);
         welcomeType = findViewById(R.id.welcomeMessage);
         logOut = findViewById(R.id.btnLogout);
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        userID = currentUser.getUid();
 
+        currentUser = new Users();
+        typenameString = currentUser.getName();
+
+        if(0==1){}
+        else if(typenameString != null){
+            nametype = Objects.requireNonNull(typenameString.split(" "));
+            name = "Welcome " + nametype[0] + "!";
+            type = "You are signed in as " + nametype[1] + ".";
+        }
+        else{
+            name= "Welcome!";
+            type = "You are signed in";
+        }
 
         welcomeName.setText(name);
         welcomeType.setText(type);
@@ -55,13 +65,13 @@ public class WelcomeScreen extends AppCompatActivity {
                 startActivity(new Intent(WelcomeScreen.this, MainActivity.class));
             }
         });
-        /** Attach a listener to read the data at our posts reference
-        ref.addValueEventListener(new ValueEventListener() {
+        // Attach a listener to read the data at our posts reference
+        /**ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Users user = dataSnapshot.getValue(Users.class);
+                User user = dataSnapshot.getValue(User.class);
                 System.out.println(user);
             }
-        });*/
+        }*/
     }
 }

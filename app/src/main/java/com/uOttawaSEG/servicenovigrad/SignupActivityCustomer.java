@@ -29,7 +29,6 @@ public class SignupActivityCustomer extends AppCompatActivity {
     public boolean canSignIn;
     public HashMap<String, String> infoHashMap;
     public DatabaseReference mRef;
-    public DatabaseReference mRefChild;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDB;
     private Users user;
@@ -52,7 +51,6 @@ public class SignupActivityCustomer extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mDB = FirebaseDatabase.getInstance();
-        mRef = mDB.getReference("Users");
 
         mBtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,14 +99,14 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                         String name = mUsername.getText().toString();
                                         String email = mEmail.getText().toString();
                                         FirebaseUser muser = mAuth.getCurrentUser();
+                                        mRef = mDB.getReference("Users");
 
 
                                         user = new Users(muser.getUid(),name,email,"customer");
+                                        mRef.setValue(muser.getUid());
 
-                                        mRef.setValue("UID", muser.getUid());
-                                        mRefChild = mRef.child(muser.getUid());
+                                        mRef.child(muser.getUid()).setValue(user);
 
-                                        mRefChild.setValue(muser.getUid(), user);
 
                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(name+" customer")
