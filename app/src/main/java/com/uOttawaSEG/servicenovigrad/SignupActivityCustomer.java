@@ -99,13 +99,11 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                         String name = mUsername.getText().toString();
                                         String email = mEmail.getText().toString();
                                         FirebaseUser muser = mAuth.getCurrentUser();
-                                        mRef = mDB.getReference("Users");
+                                        mRef = mDB.getReference("Users/"+muser.getUid());
 
 
                                         user = new Users(muser.getUid(),name,email,"customer");
-                                        mRef.setValue(muser.getUid());
-
-                                        mRef.child(muser.getUid()).setValue(user);
+                                        mRef.setValue(user);
 
 
                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()

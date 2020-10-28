@@ -1,5 +1,6 @@
 package com.uOttawaSEG.servicenovigrad;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,10 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -21,16 +25,8 @@ public class WelcomeScreen extends AppCompatActivity {
 
     public TextView welcomeName, welcomeType;
     public Button logOut;
-    public String[] nametype;
-    public String typenameString,name,type;
-    private FirebaseUser currentUser;
-
-
-    // Get a reference to our posts
-    final FirebaseDatabase userDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference ref = userDatabase.getReference("service-novigrad-98386/Users");
-
-
+    public String welcome, role;
+    private Users currentUser;
 
 
     @Override
@@ -43,21 +39,32 @@ public class WelcomeScreen extends AppCompatActivity {
         logOut = findViewById(R.id.btnLogout);
 
         currentUser = new Users();
-        typenameString = currentUser.getName();
 
-        if(0==1){}
-        else if(typenameString != null){
-            nametype = Objects.requireNonNull(typenameString.split(" "));
-            name = "Welcome " + nametype[0] + "!";
-            type = "You are signed in as " + nametype[1] + ".";
+        if(currentUser.getEmail() != null && currentUser.getName() != null && currentUser.getId() != null && currentUser.getType() != null){
+            welcomeName.setText("Welcome " + currentUser.getName() + "!");
+            welcomeType.setText("You are signed in as " + currentUser.getType() + ".");
         }
         else{
-            name= "Welcome!";
-            type = "You are signed in";
+            welcome = "Error loading profile";
+            role = "Please log in again.";
+
+            if(currentUser.getEmail() == null){
+                welcome = welcome+"s";
+            }
+            if(currentUser.getName() == null){
+                welcome = welcome+"h";
+            }
+            if(currentUser.getId() == null){
+                welcome = welcome+"i";
+            }
+            if(currentUser.getType() == null){
+                welcome = welcome+"t";
+            }
+            welcomeName.setText(welcome);
+            welcomeType.setText(role);
         }
 
-        welcomeName.setText(name);
-        welcomeType.setText(type);
+
 
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,13 +72,9 @@ public class WelcomeScreen extends AppCompatActivity {
                 startActivity(new Intent(WelcomeScreen.this, MainActivity.class));
             }
         });
-        // Attach a listener to read the data at our posts reference
-        /**ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                System.out.println(user);
-            }
-        }*/
+    }
+
+    private void toastMessage(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }
