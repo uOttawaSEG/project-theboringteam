@@ -22,7 +22,7 @@ public class WelcomeScreen extends AppCompatActivity {
     public TextView welcomeName, welcomeType;
     public Button logOut;
     public String[] nametype;
-    public String typenameString,name,type;
+    public String userID,name,type;
     private FirebaseUser currentUser;
 
     // Get a reference to our posts
@@ -37,20 +37,19 @@ public class WelcomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
 
+
+
         welcomeName = findViewById(R.id.welcomeMessageName);
         welcomeType = findViewById(R.id.welcomeMessage);
         logOut = findViewById(R.id.btnLogout);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        typenameString = currentUser.getDisplayName();
+        userID = currentUser.getUid();
+
 
         else if(typenameString != null){
             nametype = Objects.requireNonNull(typenameString.split(" "));
             name = "Welcome " + nametype[0] + "!";
             type = "You are signed in as " + nametype[1] + ".";
-        }
-        else{
-            name= "Welcome!";
-            type = "You are signed in";
         }
 
         welcomeName.setText(name);

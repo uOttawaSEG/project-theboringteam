@@ -32,6 +32,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
     public DatabaseReference mRefChild;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDB;
+    private User user;
 
 
     @Override
@@ -99,22 +100,21 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                         toastMessage("New account created!");
                                         String name = mUsername.getText().toString();
                                         String email = mEmail.getText().toString();
-                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        FirebaseUser muser = mAuth.getCurrentUser();
 
-                                        infoHashMap.put("username", name);
-                                        infoHashMap.put("email", email);
-                                        infoHashMap.put("type", "customer");
 
-                                        mRef.setValue("UID", user.getUid());
-                                        mRefChild = mRef.child(user.getUid());
+                                        user = new User(muser.getUid(),name,email,"customer");
 
-                                        mRefChild.setValue(infoHashMap);
+                                        mRef.setValue("UID", muser.getUid());
+                                        mRefChild = mRef.child(muser.getUid());
+
+                                        mRefChild.setValue(muser.getUid(), user);
 
                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(name+" customer")
                                                 .build();
 
-                                        user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        muser.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {

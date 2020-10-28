@@ -6,7 +6,7 @@ class User {
     private String _email;
     private String _type;
 
-    public User(String id, String name, String price, String email, String type) {
+    public User(String id, String name, String email, String type) {
         _id = id;
         _name = name;
         _email = email;
