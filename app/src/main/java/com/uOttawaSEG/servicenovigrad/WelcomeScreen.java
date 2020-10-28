@@ -32,11 +32,6 @@ public class WelcomeScreen extends AppCompatActivity {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         typenameString = currentUser.getDisplayName();
 
-
-        if(currentUser == null){
-            name= "poop!";
-            type = "poopy!";
-        }
         else if(typenameString != null){
             nametype = Objects.requireNonNull(typenameString.split(" "));
             name = "Welcome " + nametype[0] + "!";

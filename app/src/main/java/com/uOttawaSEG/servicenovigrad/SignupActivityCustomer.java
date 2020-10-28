@@ -29,6 +29,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
     public boolean canSignIn;
     public HashMap<String, String> infoHashMap;
     public DatabaseReference mRef;
+    public DatabaseReference mRefChild;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDB;
 
@@ -103,9 +104,11 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                         infoHashMap.put("username", name);
                                         infoHashMap.put("email", email);
                                         infoHashMap.put("type", "customer");
-                                        infoHashMap.put("UID", user.getUid());
 
-                                        mRef.setValue(infoHashMap);
+                                        mRef.setValue("UID", user.getUid());
+                                        mRefChild = mRef.child(user.getUid());
+
+                                        mRefChild.setValue(infoHashMap);
 
                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(name+" customer")
