@@ -1,5 +1,6 @@
 package com.uOttawaSEG.servicenovigrad;
 
+<<<<<<< HEAD:app/src/main/java/com/uOttawaSEG/servicenovigrad/User.java
 class User {
     private String _id;
     private String _name;
@@ -15,31 +16,64 @@ class User {
         _name = name;
         _email = email;
         _type = type;
+=======
+import android.os.Parcelable;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.google.firebase.FirebaseError;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+class Users {
+    private String id;
+    private String name;
+    private String email;
+    private String type;
+
+    public Users() {
+        FirebaseDatabase userDatabase = FirebaseDatabase.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser= mAuth.getCurrentUser();
+
+        //I dont know how to access the database, or where!!! someone help!!! AHHHHH!!
+    }
+    public Users(String id, String name, String email, String type) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.type = type;
+>>>>>>> d1402290294b6eb7c1f8fcd89fd5d43646fe2c6b:app/src/main/java/com/uOttawaSEG/servicenovigrad/Users.java
     }
 
     public void setId(String id) {
-        _id = id;
+        this.id = id;
     }
     public String getId() {
-        return _id;
+        return id;
     }
     public void setName(String name) {
-        _name = name;
+        this.name = name;
     }
     public String getName() {
-        return _name;
+        return name;
     }
     public void setEmail(String email) {
-        _email = email;
+        this.email = email;
     }
     public String getEmail() {
-        return _email;
+        return email;
     }
-    public void setType(String type) {
-        _type = type;
-    }
+    public void setType(String type) {this.type = type; }
     public String getType() {
-        return _type;
+        return type;
     }
+
 
 }
