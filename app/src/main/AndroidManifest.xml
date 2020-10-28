@@ -23,11 +23,7 @@
         <activity android:name=".SignupActivityEmployee" />
         <activity android:name=".SignupActivityCustomer" />
         <activity android:name=".ChooseTypeActivity" />
-        <activity android:name=".signup" />
-        <activity android:name=".activitity_choose_type" />
         <activity android:name=".WelcomeScreen" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".LoginActivity" />
     </application>
 
 </manifest>

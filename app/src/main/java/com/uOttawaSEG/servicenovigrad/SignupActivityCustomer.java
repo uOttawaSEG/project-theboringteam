@@ -17,13 +17,20 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class SignupActivityCustomer extends AppCompatActivity {
 
     public EditText mEmail, mPassword, mUsername;
     public Button mBtnSignUp, mBtnBack;
     public boolean canSignIn;
+    public HashMap<String, String> infoHashMap;
+    public DatabaseReference mRef;
     private FirebaseAuth mAuth;
+    private FirebaseDatabase mDB;
 
 
     @Override
@@ -34,12 +41,16 @@ public class SignupActivityCustomer extends AppCompatActivity {
         mUsername = findViewById(R.id.username);
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
+
         mBtnSignUp = findViewById(R.id.btnSignUp);
         mBtnBack = findViewById(R.id.btnBack);
         canSignIn = true;
+        infoHashMap = new HashMap<>();
 
 
         mAuth = FirebaseAuth.getInstance();
+        mDB = FirebaseDatabase.getInstance();
+        mRef = mDB.getReference("Users");
 
         mBtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +87,8 @@ public class SignupActivityCustomer extends AppCompatActivity {
                     toastMessage("Field(s) are empty");
                     canSignIn = false;
                 }
+
+
                 if(canSignIn) {
                     mAuth.createUserWithEmailAndPassword(email,pass)
                             .addOnCompleteListener(SignupActivityCustomer.this, new OnCompleteListener<AuthResult>() {
@@ -84,10 +97,20 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         toastMessage("New account created!");
                                         String name = mUsername.getText().toString();
-                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                        String email = mEmail.getText().toString();
+                                        FirebaseUser user = mAuth.getCurrentUser();
+
+                                        infoHashMap.put("username", name);
+                                        infoHashMap.put("email", email);
+                                        infoHashMap.put("type", "customer");
+                                        infoHashMap.put("UID", user.getUid());
+
+                                        mRef.setValue(infoHashMap);
+
                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                                 .setDisplayName(name+" customer")
                                                 .build();
+
                                         user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -96,6 +119,8 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                                 }
                                             }
                                         });
+
+
                                     }
                                     if (!task.isSuccessful()){
                                         toastMessage("Sign up unsuccessful.");
