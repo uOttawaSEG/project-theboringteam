@@ -43,54 +43,28 @@ public class WelcomeScreen extends AppCompatActivity {
         // ### FIREBASE STUFF ###
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        usersDatabase = mFirebaseDatabase.getReference();
         final FirebaseUser user = mAuth.getCurrentUser();
         userid = user.getUid();
+        usersDatabase = mFirebaseDatabase.getReference("Users").child(userid);
+
 
         usersDatabase.addValueEventListener(new ValueEventListener() { //gets called when there is a change in the database OR when the activity starts
             @Override
             //a snapshot of the database is like a snapshot of the whole database
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //since we have the whole database, we need to iterate through all the users inside the database
-                for(DataSnapshot ds : snapshot.getChildren()){
                     User mUser = new User();
                     //we first go to the child of the user id and
-                    mUser.setName(ds.child(userid).getValue(User.class).getName()); //set the name
-                    mUser.setEmail(ds.child(userid).getValue(User.class).getEmail()); //set the email
-                    mUser.setType(ds.child(userid).getValue(User.class).getType()); //set the type
+                    mUser.setName(snapshot.child("name").getValue(String.class)); //set the name
+                    mUser.setEmail(snapshot.child("email").getValue(String.class)); //set the email
+                    mUser.setType(snapshot.child("type").getValue(String.class)); //set the type
 
-                    welcomeName = mUser.getName();
-                    welcomeType = mUser.getType();
-                }
+                    welcomeName.setText("Welcome " + mUser.getName()+"!");
+                    welcomeType.setText("You are signed in as " + mUser.getType() + ".");
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
- /*       currentUser = new User();
-        if(currentUser.getEmail() != null && currentUser.getName() != null && currentUser.getId() != null && currentUser.getType() != null){
-            welcomeName.setText("Welcome " + currentUser.getName() + "!");
-            welcomeType.setText("You are signed in as " + currentUser.getType() + ".");
-        }
-        else{
-            welcome = "Error loading profile";
-            role = "Please log in again.";
-
-            if(currentUser.getEmail() == null){
-                welcome = welcome+"s";
             }
-            if(currentUser.getName() == null){
-                welcome = welcome+"h";
-            }
-            if(currentUser.getId() == null){
-                welcome = welcome+"i";
-            }
-            if(currentUser.getType() == null){
-                welcome = welcome+"t";
-            }
-            welcomeName.setText(welcome);
-            welcomeType.setText(role);
-        }
-*/}
         });
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
