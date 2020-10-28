@@ -97,23 +97,17 @@ public class SignupActivityCustomer extends AppCompatActivity {
 
                                         //FIREBASE STUFF
                                         FirebaseUser mUser = mAuth.getCurrentUser();
-                                        mRef = mDB.getReference("Users");
 
                                         //Creating a local user
                                         user = new User(mUser.getUid(),name,email,"customer");
-                                        FirebaseUser muser = mAuth.getCurrentUser();
-                                        mRef = mDB.getReference("Users/"+muser.getUid());
-                                        
-                                        user = new User(muser.getUid(),name,email,"customer");
-                                        mRef.setValue(user);
+                                        mRef = mDB.getReference("Users/"+mUser.getUid());
 
                                         //Setting the local user to firebase
-                                        mRef.setValue(mUser.getUid());
-                                        mRef.child(mUser.getUid()).setValue(user);
+                                        mRef.setValue(user);
 
                                         //Old way of adding user type
                                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                                .setDisplayName(name+" customer")
+                                                .setDisplayName(name)
                                                 .build();
 
                                         mUser.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
