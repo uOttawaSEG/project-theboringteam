@@ -21,12 +21,11 @@ import com.google.firebase.database.ValueEventListener;
 public class WelcomeScreen extends AppCompatActivity {
 
     public TextView welcomeName, welcomeType;
-    public Button logOut;
+    public Button logOut, btnDriversLicense, btnPhotoID, btnHealthCard;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference usersDatabase;
     private String userid;
-
     //public String welcome, role;
     //private User currentUser;
 
@@ -36,6 +35,9 @@ public class WelcomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
 
+        btnDriversLicense = findViewById(R.id.btnDriversLicense);
+        btnHealthCard = findViewById(R.id.btnHealthCard);
+        btnPhotoID = findViewById(R.id.btnPhotoID);
         welcomeName = findViewById(R.id.welcomeMessageName);
         welcomeType = findViewById(R.id.welcomeMessage);
         logOut = findViewById(R.id.btnLogout);
@@ -72,7 +74,26 @@ public class WelcomeScreen extends AppCompatActivity {
                 startActivity(new Intent(WelcomeScreen.this, MainActivity.class));
             }
         });
+        btnDriversLicense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WelcomeScreen.this, DriversLicense.class));
+            }
+        });
+        btnDriversLicense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WelcomeScreen.this, HealthCard.class));
+            }
+        });
+        btnPhotoID.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(WelcomeScreen.this, PhotoID.class));
+            }
+        });
     }
+
 
     private void toastMessage(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
