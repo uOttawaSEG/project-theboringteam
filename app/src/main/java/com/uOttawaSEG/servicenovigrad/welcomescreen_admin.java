@@ -73,9 +73,12 @@ public class welcomescreen_admin extends AppCompatActivity {
                 //Any time you read data from the Database, you receive the data as a DataSnapshot
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     //getting product
-                    Service service = postSnapshot.getValue(Service.class);
+                    String nameS = postSnapshot.child("name").getValue(String.class);
+                    toastMessage(nameS);
+                    Service service = new Service(nameS);
                     services.add(service);
                 }
+
                 //creating the adapter
                 ServiceList sAdapter = new ServiceList(welcomescreen_admin.this, services);
                 //attaching adapter to the listview
@@ -121,11 +124,12 @@ public class welcomescreen_admin extends AppCompatActivity {
                     databaseServices.child(id).setValue(service);
 
                     //displaying a success toast
-                    //Toast.makeText(this,"Product added",Toast.LENGTH_LONG).show();
+
+                    toastMessage("Product added");
                     b.dismiss();
                 }else{
                     //if the value is not given displaying a toast
-                    //Toast.makeText(this, "Please enter a name", Toast.LENGTH_LONG).show();
+                    toastMessage("Please enter a name");
                 }
             }
         });
@@ -136,5 +140,9 @@ public class welcomescreen_admin extends AppCompatActivity {
                 b.dismiss();
             }
         });
+    }
+
+    private void toastMessage(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 }

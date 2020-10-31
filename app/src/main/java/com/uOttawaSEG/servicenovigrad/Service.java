@@ -5,20 +5,20 @@ import java.util.Hashtable;
 
 public class Service{
     private String name;
-    private Dictionary reqInfo;
+    //private Dictionary reqInfo;
 
     public Service(String name){
         this.name = name;
-        reqInfo = new Hashtable();
+        //reqInfo = new Hashtable();
     }
 
     public String getName(){
         return name;
     }
 
-    public void addInfo(String key, String value){
-        reqInfo.put(key, value);
-    }
+   // public void addInfo(String key, String value){
+        //reqInfo.put(key, value);
+    //}
 
 
 }
