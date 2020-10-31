@@ -56,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        startActivity(new Intent(MainActivity.this, WelcomeScreen.class));
+                                        if("joDPeX1hEPRFCm4VxkoA3pN384v1".equals(mAuth.getCurrentUser().getUid()))
+                                            startActivity(new Intent(MainActivity.this, welcomescreen_admin.class));
+                                        else
+                                            startActivity(new Intent(MainActivity.this, WelcomeScreen.class));
                                     } else {
                                         toastMessage("Login information not found in database. Check fields again!");
                                     }
