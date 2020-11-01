@@ -74,7 +74,7 @@ public class WelcomeScreen extends AppCompatActivity {
                 startActivity(new Intent(WelcomeScreen.this, MainActivity.class));
             }
         });
-        btnDriversLicense.setOnClickListener(new View.OnClickListener() {
+        /**btnDriversLicense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(WelcomeScreen.this, DriversLicense.class));
@@ -91,7 +91,7 @@ public class WelcomeScreen extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(WelcomeScreen.this, PhotoID.class));
             }
-        });
+        });*/
     }
 
 

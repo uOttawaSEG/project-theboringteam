@@ -14,7 +14,7 @@ public class ServiceList extends ArrayAdapter<Service> {
         List<Service> services;
 
         public ServiceList(Activity context, List<Service> services) {
-                super(context, 0, services);
+                super(context, R.layout.activity_list, services);
                 this.context = context;
                 this.services = services;
         }
@@ -23,7 +23,7 @@ public class ServiceList extends ArrayAdapter<Service> {
         public View getView(int position, View convertView, ViewGroup parent) {
                 LayoutInflater inflater = context.getLayoutInflater();
                 View listViewItem = inflater.inflate(R.layout.activity_list, null, true);
-                TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
+                TextView textViewName = listViewItem.findViewById(R.id.serviceName);
 
                 Service product = services.get(position);
                 textViewName.setText(product.getName());
