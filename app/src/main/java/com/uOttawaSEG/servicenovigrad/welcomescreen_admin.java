@@ -22,8 +22,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class welcomescreen_admin extends AppCompatActivity {
 
     final List<Service> services = new ArrayList<Service>();
     final List<String> servicesID = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +82,11 @@ public class welcomescreen_admin extends AppCompatActivity {
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     //getting product
                     String nameS = postSnapshot.child("name").getValue(String.class);
-                    ArrayList<String> reqInfo = new ArrayList<>();
+                    HashMap<String,String> reqInfo = new HashMap<>();
 
-                    for(DataSnapshot postpostSnapshot : postSnapshot.getChildren()){
-                         reqInfo.add(postpostSnapshot.getValue(String.class));
+                    for(DataSnapshot postpostSnapshot : postSnapshot.child("reqInfo").getChildren()){
+                        reqInfo.put(postpostSnapshot.getKey(),postpostSnapshot.getValue(String.class));
+
                     }
 
                     String id = postSnapshot.getKey();
@@ -120,11 +124,7 @@ public class welcomescreen_admin extends AppCompatActivity {
         final Button addReq = dialogView.findViewById(R.id.buttonDelete);
         final ListView displayReq = dialogView.findViewById(R.id.listViewReq);
 
-        ArrayList infoList = service.getReqInfo();
 
-        for(int i=0; i<infoList.size();i++){
-
-        }
 
         title.setText("Update or Delete objects from "+service.getName());
 
@@ -146,7 +146,7 @@ public class welcomescreen_admin extends AppCompatActivity {
                     //saving the product
                     databaseServices.child(id).setValue(service);
 
-                    Service selected = services.set(index, service);
+                    services.set(index, service);
 
                     //displaying a success toast
                     Toast.makeText(getApplicationContext(), "Service requirement '"+ service.getName() +"' Updated",Toast.LENGTH_LONG).show();
@@ -180,7 +180,12 @@ public class welcomescreen_admin extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                databaseServices.child(id).child(service.getRequiremnt(i)).removeValue();
+
+                Integer[] deleteKey = (Integer[]) service.getReqInfo().keySet().toArray();
+
+                databaseServices.child(id).child(service.getRequiremnt(deleteKey[i].toString())).removeValue();
+
+                databaseServices.child(id).child("infoReq");
                 service.removeReqiuirement(i);
                 services.set(index,service);
                 Toast.makeText(getApplicationContext(),"Requirement Updated", Toast.LENGTH_LONG).show();

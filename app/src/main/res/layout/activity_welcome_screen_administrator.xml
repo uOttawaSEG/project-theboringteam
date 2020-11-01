@@ -75,12 +75,12 @@
     <ListView
         android:id="@+id/listViewServices"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent"
         android:layout_below="@+id/welcomeMessage"
         android:layout_marginTop="15dp"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:visibility="visible">
+        android:textColor="#000000"
+        android:textSize="18sp">
 
     </ListView>
 
