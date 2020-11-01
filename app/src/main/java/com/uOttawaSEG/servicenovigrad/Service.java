@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Service{
     private String name;
-    private ArrayList<String> reqInfo;
+    private ArrayList reqInfo;
 
     public Service(String name){
         this.name = name;
@@ -28,7 +28,7 @@ public class Service{
     }
 
     public String getRequiremnt(int index){
-        return reqInfo.get(index);
+        return (String) reqInfo.get(index);
     }
 
     public void removeReqiuirement(int index){

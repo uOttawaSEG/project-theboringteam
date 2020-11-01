@@ -35,9 +35,6 @@ public class WelcomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
 
-        btnDriversLicense = findViewById(R.id.btnDriversLicense);
-        btnHealthCard = findViewById(R.id.btnHealthCard);
-        btnPhotoID = findViewById(R.id.btnPhotoID);
         welcomeName = findViewById(R.id.welcomeMessageName);
         welcomeType = findViewById(R.id.welcomeMessage);
         logOut = findViewById(R.id.btnLogout);

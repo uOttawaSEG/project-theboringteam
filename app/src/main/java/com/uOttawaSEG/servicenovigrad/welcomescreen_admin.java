@@ -79,7 +79,12 @@ public class welcomescreen_admin extends AppCompatActivity {
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     //getting product
                     String nameS = postSnapshot.child("name").getValue(String.class);
-                    ArrayList reqInfo = postSnapshot.child("reqInfo").getValue(ArrayList.class);
+                    ArrayList<String> reqInfo = new ArrayList<>();
+
+                    for(DataSnapshot postpostSnapshot : postSnapshot.getChildren()){
+                         reqInfo.add(postpostSnapshot.getValue(String.class));
+                    }
+
                     String id = postSnapshot.getKey();
 
                     toastMessage(nameS);
@@ -239,23 +244,7 @@ public class welcomescreen_admin extends AppCompatActivity {
         });
     }
 
-    private void updateService(String id,String dataType,String name,Service service) {
-        //getting the specified product reference
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Services").child(id);
 
-        //updating the product
-        service.addInfo(name);
-        dR.setValue(service);
-        Toast.makeText(getApplicationContext(), "Service requirement '"+ name +"' Updated",Toast.LENGTH_LONG).show();
-    }
-
-    private void deleteProduct(String id) {
-        //getting the specified product reference
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Services").child(id);
-        //removing product
-        dR.removeValue();
-        Toast.makeText(getApplicationContext(),"Product Deleted", Toast.LENGTH_LONG).show();
-    }
 
     private void toastMessage(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
