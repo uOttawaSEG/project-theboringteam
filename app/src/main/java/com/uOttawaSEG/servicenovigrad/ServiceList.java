@@ -7,14 +7,19 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class ServiceList extends ArrayAdapter<Service> {
         private Activity context;
-        List<Service> services;
+        HashMap<String,Service> services;
 
-        public ServiceList(Activity context, List<Service> services) {
-                super(context, R.layout.activity_list, services);
+        public ServiceList(Activity context, HashMap<String,Service> services) {
+                super(context, R.layout.activity_list, new ArrayList(services.values()));
+
                 this.context = context;
                 this.services = services;
         }
@@ -25,7 +30,9 @@ public class ServiceList extends ArrayAdapter<Service> {
                 View listViewItem = inflater.inflate(R.layout.activity_list, null, true);
                 TextView textViewName = listViewItem.findViewById(R.id.serviceName);
 
-                Service product = services.get(position);
+                ArrayList keys = new ArrayList(services.keySet());
+
+                Service product = services.get(keys.get(position));
                 textViewName.setText(product.getName());
                 return listViewItem;
         }

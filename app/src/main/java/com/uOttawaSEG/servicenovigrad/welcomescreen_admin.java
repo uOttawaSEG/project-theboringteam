@@ -1,5 +1,6 @@
 package com.uOttawaSEG.servicenovigrad;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -35,7 +36,7 @@ public class welcomescreen_admin extends AppCompatActivity {
     ListView listViewServices;
     DatabaseReference databaseServices;
 
-    final List<Service> services = new ArrayList<Service>();
+    final HashMap<String,Service> services = new HashMap<String,Service>();
     final List<String> servicesID = new ArrayList<String>();
 
 
@@ -49,7 +50,6 @@ public class welcomescreen_admin extends AppCompatActivity {
 
         databaseServices= FirebaseDatabase.getInstance().getReference("Services");
 
-        //adding an onclicklistener to button
         buttonAddService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,8 +60,8 @@ public class welcomescreen_admin extends AppCompatActivity {
         listViewServices.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Service selected = services.get(i);
                 String selectedID = servicesID.get(i);
+                Service selected = services.get(servicesID.get(i));
                 updateDelete(selected, selectedID, i);
                 return true;
             }
@@ -76,6 +76,7 @@ public class welcomescreen_admin extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 services.clear();
+
                 //iterating through all the nodes
                 //Any time you read data from the Database, you receive the data as a DataSnapshot
 
@@ -94,10 +95,12 @@ public class welcomescreen_admin extends AppCompatActivity {
 
 
                     Service service = new Service(nameS, reqInfo,nextReq);
-                    services.add(service);
+                    services.put(id,service);
                     servicesID.add(id);
 
                 }
+
+
 
                 ServiceList sAdapter = new ServiceList(welcomescreen_admin.this, services);
 
@@ -113,6 +116,7 @@ public class welcomescreen_admin extends AppCompatActivity {
 
 
     private void updateDelete(final Service service, final String id, final int index) {
+
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.activity_updatedelete_dialog, null);
@@ -127,7 +131,7 @@ public class welcomescreen_admin extends AppCompatActivity {
 
 
 
-        title.setText("Update or Delete objects from "+service.getName());
+        title.setText("Update or Delete objects from "+ service.getName());
 
         RequirementList rAdapter = new RequirementList(this, service);
 
@@ -145,9 +149,9 @@ public class welcomescreen_admin extends AppCompatActivity {
 
                     service.addInfo(req);
                     //saving the product
-                    databaseServices.child(id).setValue(service);
+                    databaseServices.child(id).child("reqInfo").setValue(service);
 
-                    services.set(index, service);
+                    services.put(id, service);
 
                     //displaying a success toast
                     Toast.makeText(getApplicationContext(), "Service requirement '"+ service.getName() +"' Updated",Toast.LENGTH_LONG).show();
@@ -162,15 +166,16 @@ public class welcomescreen_admin extends AppCompatActivity {
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try{
-                    if(databaseServices.child(id).removeValue().isSuccessful()) {
-                        services.remove(index);
-                        servicesID.remove(index);
-                        b.dismiss();
+
+                if(databaseServices.child(id).removeValue().isSuccessful()) {
+                        services.remove(id);
+                        servicesID.remove(id);
+
                         Toast.makeText(getApplicationContext(), "Service Deleted", Toast.LENGTH_LONG).show();
-                    }
+                        b.dismiss();
+
                 }
-                catch(Exception e){
+                else{
                     Toast.makeText(getApplicationContext(),"This item does not exsist", Toast.LENGTH_LONG).show();
                 }
             }
@@ -194,7 +199,7 @@ public class welcomescreen_admin extends AppCompatActivity {
 
                 databaseServices.child(id).child("infoReq");
                 service.removeReqiuirement(i);
-                services.set(index,service);
+                //services.set(index,service);
                 Toast.makeText(getApplicationContext(),"Requirement Updated", Toast.LENGTH_LONG).show();
                 return true;
             }
@@ -236,7 +241,7 @@ public class welcomescreen_admin extends AppCompatActivity {
                     databaseServices.child(id).setValue(service);
 
                     //
-                    services.add(service);
+                    //services.add(service);
 
                     //displaying a success toast
                     toastMessage("Product added");

@@ -127,6 +127,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
                 }
                 else {
                     toastMessage("An error has occurred. Please try again!");
+                    canSignIn = true;
                 }
             }
         });
