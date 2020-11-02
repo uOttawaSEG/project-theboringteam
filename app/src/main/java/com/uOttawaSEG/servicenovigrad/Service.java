@@ -14,14 +14,13 @@ public class Service{
 
     public Service(String name){
         this.name = name;
-        reqInfo = new HashMap<Integer,String>();
-        nextReq = new Integer(0);
+        reqInfo = new HashMap<String,String>();
+        nextReq = 0;
     }
 
     public Service(String name, HashMap reqInfo,Integer nextReq){
         this.name = name;
         this.reqInfo = reqInfo;
-        //nextReq = new Integer(((Integer) Collections.max(reqInfo.keySet())).intValue() + 1);
         this.nextReq = nextReq;
     }
 
@@ -30,8 +29,9 @@ public class Service{
     }
 
     public void addInfo(String requiremnt){
-        reqInfo.put(nextReq,requiremnt);
-        nextReq = new Integer(nextReq.intValue()+1);
+        reqInfo.put(nextReq.toString(),requiremnt);
+        Integer nextReq0 = new Integer(nextReq.intValue()+1);
+        nextReq = nextReq0;
     }
 
     public String getRequiremnt(String key){

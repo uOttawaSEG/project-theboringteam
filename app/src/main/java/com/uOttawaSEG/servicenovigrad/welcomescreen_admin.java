@@ -92,7 +92,7 @@ public class welcomescreen_admin extends AppCompatActivity {
 
                     String id = postSnapshot.getKey();
 
-                    toastMessage(nameS);
+
                     Service service = new Service(nameS, reqInfo,nextReq);
                     services.add(service);
                     servicesID.add(id);
@@ -121,8 +121,8 @@ public class welcomescreen_admin extends AppCompatActivity {
         final TextView title = dialogView.findViewById(R.id.serviceTitle);
         final EditText editTextName = dialogView.findViewById(R.id.addReq);
         final Button buttonCancel = dialogView.findViewById(R.id.buttonCancel);
-        final Button buttonDelete = dialogView.findViewById(R.id.buttonCreate);
-        final Button addReq = dialogView.findViewById(R.id.buttonDelete);
+        final Button buttonDelete = dialogView.findViewById(R.id.buttonDelete);
+        final Button addReq = dialogView.findViewById(R.id.buttonCreate);
         final ListView displayReq = dialogView.findViewById(R.id.listViewReq);
 
 
@@ -162,11 +162,17 @@ public class welcomescreen_admin extends AppCompatActivity {
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //removing product
-                databaseServices.child(id).removeValue();
-                services.remove(index);
-                servicesID.remove(index);
-                Toast.makeText(getApplicationContext(),"Service Deleted", Toast.LENGTH_LONG).show();
+                try{
+                    if(databaseServices.child(id).removeValue().isSuccessful()) {
+                        services.remove(index);
+                        servicesID.remove(index);
+                        b.dismiss();
+                        Toast.makeText(getApplicationContext(), "Service Deleted", Toast.LENGTH_LONG).show();
+                    }
+                }
+                catch(Exception e){
+                    Toast.makeText(getApplicationContext(),"This item does not exsist", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
