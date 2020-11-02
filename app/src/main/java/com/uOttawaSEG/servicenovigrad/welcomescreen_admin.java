@@ -62,6 +62,9 @@ public class welcomescreen_admin extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String selectedID = servicesID.get(i);
                 Service selected = services.get(servicesID.get(i));
+                if(selectedID == null || selected == null){
+                    toastMessage("broken");
+                }
                 updateDelete(selected, selectedID, i);
                 return true;
             }
@@ -76,6 +79,7 @@ public class welcomescreen_admin extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 services.clear();
+                servicesID.clear();
 
                 //iterating through all the nodes
                 //Any time you read data from the Database, you receive the data as a DataSnapshot
@@ -86,10 +90,12 @@ public class welcomescreen_admin extends AppCompatActivity {
                     HashMap<String,String> reqInfo = new HashMap<>();
                     Integer nextReq = postSnapshot.child("nextReq").getValue(Integer.class);
 
-                    for(DataSnapshot postpostSnapshot : postSnapshot.child("reqInfo").getChildren()){
-                        reqInfo.put(postpostSnapshot.getKey(),postpostSnapshot.getValue(String.class));
+                    try {
+                        for (DataSnapshot postpostSnapshot : postSnapshot.child("reqInfo").getChildren()) {
+                            reqInfo.put(postpostSnapshot.getKey(), postpostSnapshot.getValue(String.class));
 
-                    }
+                        }
+                    }catch(Exception e){}
 
                     String id = postSnapshot.getKey();
 
@@ -115,12 +121,13 @@ public class welcomescreen_admin extends AppCompatActivity {
 
 
 
-    private void updateDelete(final Service service, final String id, final int index) {
+    private void updateDelete(final Service tempService, final String id, final int index) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.activity_updatedelete_dialog, null);
         dialogBuilder.setView(dialogView);
+        final Service service = tempService;
 
         final TextView title = dialogView.findViewById(R.id.serviceTitle);
         final EditText editTextName = dialogView.findViewById(R.id.addReq);
@@ -149,9 +156,10 @@ public class welcomescreen_admin extends AppCompatActivity {
 
                     service.addInfo(req);
                     //saving the product
-                    databaseServices.child(id).child("reqInfo").setValue(service);
+                    databaseServices.child(id).setValue(service);
 
                     services.put(id, service);
+
 
                     //displaying a success toast
                     Toast.makeText(getApplicationContext(), "Service requirement '"+ service.getName() +"' Updated",Toast.LENGTH_LONG).show();
