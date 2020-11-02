@@ -83,6 +83,7 @@ public class welcomescreen_admin extends AppCompatActivity {
                     //getting product
                     String nameS = postSnapshot.child("name").getValue(String.class);
                     HashMap<String,String> reqInfo = new HashMap<>();
+                    Integer nextReq = postSnapshot.child("nextReq").getValue(Integer.class);
 
                     for(DataSnapshot postpostSnapshot : postSnapshot.child("reqInfo").getChildren()){
                         reqInfo.put(postpostSnapshot.getKey(),postpostSnapshot.getValue(String.class));
@@ -92,7 +93,7 @@ public class welcomescreen_admin extends AppCompatActivity {
                     String id = postSnapshot.getKey();
 
                     toastMessage(nameS);
-                    Service service = new Service(nameS, reqInfo);
+                    Service service = new Service(nameS, reqInfo,nextReq);
                     services.add(service);
                     servicesID.add(id);
 

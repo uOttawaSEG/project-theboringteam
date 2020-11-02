@@ -18,10 +18,11 @@ public class Service{
         nextReq = new Integer(0);
     }
 
-    public Service(String name, HashMap reqInfo){
+    public Service(String name, HashMap reqInfo,Integer nextReq){
         this.name = name;
         this.reqInfo = reqInfo;
-        nextReq = new Integer(((Integer) Collections.max(reqInfo.keySet())).intValue() + 1);
+        //nextReq = new Integer(((Integer) Collections.max(reqInfo.keySet())).intValue() + 1);
+        this.nextReq = nextReq;
     }
 
     public String getName(){
