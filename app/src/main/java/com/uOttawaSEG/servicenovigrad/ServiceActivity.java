@@ -133,7 +133,7 @@ public class ServiceActivity extends AppCompatActivity {
         databaseService.child("reqInfo").child(requirement).removeValue();
 
         Toast.makeText(getApplicationContext(),"Requirement Updated", Toast.LENGTH_LONG).show();
-        
+
     }
 
     private void addRequirement(){
