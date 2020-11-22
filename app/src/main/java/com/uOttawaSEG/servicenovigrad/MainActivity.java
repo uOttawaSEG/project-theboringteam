@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                                         if("joDPeX1hEPRFCm4VxkoA3pN384v1".equals(mAuth.getCurrentUser().getUid()))
                                             startActivity(new Intent(MainActivity.this, welcomescreen_admin.class));
                                         else
-                                            startActivity(new Intent(MainActivity.this, welcomescreen_customer.class));
+                                            startActivity(new Intent(MainActivity.this, ChooseBranch.class));
                                     } else {
                                         toastMessage("Login information not found in database. Check fields again!");
                                     }
