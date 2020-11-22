@@ -10,17 +10,19 @@ import java.util.List;
 public class Service{
     private String name;
     private HashMap reqInfo;
-    private Integer nextReq;
+    private int nextReq;
     private String id;
+
+    public Service(){}
 
     public Service(String name, String id){
         this.name = name;
         this.id = id;
         reqInfo = new HashMap<String,String>();
-        nextReq = 0;
+        nextReq = 0 ;
     }
 
-    public Service(String name, HashMap reqInfo,Integer nextReq, String id){
+    public Service(String name, HashMap reqInfo,int nextReq, String id){
         this.name = name;
         this.reqInfo = reqInfo;
         this.nextReq = nextReq;
@@ -32,9 +34,8 @@ public class Service{
     }
 
     public void addInfo(String requiremnt){
-        reqInfo.put(nextReq.toString(),requiremnt);
-        Integer nextReq0 = new Integer(nextReq.intValue()+1);
-        nextReq = nextReq0;
+        reqInfo.put(Integer.toString(nextReq),requiremnt);
+        nextReq++;
     }
 
     public String getRequiremnt(String key){

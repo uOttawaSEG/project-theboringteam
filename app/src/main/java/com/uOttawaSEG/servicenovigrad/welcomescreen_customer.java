@@ -35,8 +35,8 @@ public class welcomescreen_customer extends AppCompatActivity {
         setContentView(R.layout.activity_welcome_screen_branch);
 
         welcomeName = findViewById(R.id.welcomeMessageName);
-        welcomeType = findViewById(R.id.welcomeMessage);
-        logOut = findViewById(R.id.btnLogout);
+        welcomeType = findViewById(R.id.info);
+        logOut = findViewById(R.id.backServices);
 
         // ### FIREBASE STUFF ###
         mAuth = FirebaseAuth.getInstance();

@@ -13,24 +13,15 @@ import java.util.List;
 
 public class RequirementList extends ArrayAdapter<Service> {
     private Activity context;
-    Service service;
     ArrayList requirements;
+    HashMap<String,String> reqInfo;
 
-    public RequirementList(Activity context, Service service) {
-        super(context, R.layout.activity_list);
+
+    public RequirementList(Activity context, ArrayList<String> requirements,HashMap reqInfo) {
+        super(context, R.layout.activity_list,new ArrayList(requirements));
         this.context = context;
-        this.service = service;
-
-        HashMap infoList = service.getReqInfo();
-
-        ArrayList requirements = new ArrayList();
-
-        String[] keys = new String[infoList.size()];
-        infoList.keySet().toArray(keys);
-
-        for(String key : keys){
-            requirements.add(infoList.get(key));
-        }
+        this.requirements = requirements;
+        this.reqInfo = reqInfo;
 
     }
 
@@ -42,7 +33,9 @@ public class RequirementList extends ArrayAdapter<Service> {
 
 
 
-        textViewName.setText((String) requirements.get(position));
+        String requirement = reqInfo.get(requirements.get(position));
+        //reqInfo.get(requirements.get(position))
+        textViewName.setText(requirement);
         return listViewItem;
     }
 }

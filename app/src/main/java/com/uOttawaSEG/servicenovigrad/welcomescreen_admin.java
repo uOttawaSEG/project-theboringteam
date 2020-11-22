@@ -1,6 +1,6 @@
 package com.uOttawaSEG.servicenovigrad;
 
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,11 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 
 public class welcomescreen_admin extends AppCompatActivity {
@@ -36,7 +32,7 @@ public class welcomescreen_admin extends AppCompatActivity {
     ListView listViewServices;
     DatabaseReference databaseServices;
 
-    final List<Service> services = new ArrayList<Service>();
+    List<Service> services = new ArrayList<>();
 
 
     @Override
@@ -44,8 +40,8 @@ public class welcomescreen_admin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen_administrator);
 
-        listViewServices = findViewById(R.id.listViewServices);
-        buttonAddService = findViewById(R.id.addService);
+        listViewServices = findViewById(R.id.requirements);
+        buttonAddService = findViewById(R.id.addRequirement);
 
         databaseServices= FirebaseDatabase.getInstance().getReference("Services");
 
@@ -83,7 +79,7 @@ public class welcomescreen_admin extends AppCompatActivity {
                     //getting product
                     String nameS = postSnapshot.child("name").getValue(String.class);
                     HashMap<String,String> reqInfo = new HashMap<>();
-                    Integer nextReq = postSnapshot.child("nextReq").getValue(Integer.class);
+                    int nextReq = Integer.parseInt((postSnapshot.child("nextReq").getValue().toString()));
                     String id = postSnapshot.child("id").getValue(String.class);
 
                     try {
@@ -115,94 +111,11 @@ public class welcomescreen_admin extends AppCompatActivity {
 
 
 
-    private void updateDelete(final Service tempService, final int index) {
+    private void updateDelete(final Service service, final int index) {
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.activity_updatedelete_dialog, null);
-        dialogBuilder.setView(dialogView);
-        final Service service = tempService;
-
-
-        final TextView title = dialogView.findViewById(R.id.serviceTitle);
-        final EditText editTextName = dialogView.findViewById(R.id.addReq);
-        final Button buttonCancel = dialogView.findViewById(R.id.buttonCancel);
-        final Button buttonDelete = dialogView.findViewById(R.id.buttonDelete);
-        final Button addReq = dialogView.findViewById(R.id.buttonCreate);
-        final ListView displayReq = dialogView.findViewById(R.id.listViewReq);
-
-        title.setText("Update or Delete objects from "+ service.getName());
-
-        dialogBuilder.setTitle("Update/Delete Service");
-        final AlertDialog b = dialogBuilder.create();
-        b.show();
-
-        addReq.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String req = editTextName.getText().toString().trim();
-                if (!TextUtils.isEmpty(req)) {
-
-                    service.addInfo(req);
-                    //saving the product
-                    databaseServices.child(service.getId()).setValue(service);
-
-                    services.set(index,service);
-
-                    services.add(service);
-
-
-                    //displaying a success toast
-                    Toast.makeText(getApplicationContext(), "Service requirement '"+ service.getName() +"' Updated",Toast.LENGTH_LONG).show();
-                    b.dismiss();
-                }else{
-                    //if the value is not given displaying a toast
-                    toastMessage("Please enter a name");
-                }
-            }
-        });
-
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(databaseServices.child(service.getId()).removeValue().isSuccessful()) {
-                        services.remove(service.getId());
-
-                        Toast.makeText(getApplicationContext(), "Service Deleted", Toast.LENGTH_LONG).show();
-                        b.dismiss();
-
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),"This item does not exsist", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        buttonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                b.dismiss();
-            }
-        });
-
-        /**displayReq.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
-                Integer[] deleteKey = (Integer[]) service.getReqInfo().keySet().toArray();
-
-                databaseServices.child(service.getId()).child(service.getRequiremnt(deleteKey[i].toString())).removeValue();
-
-                databaseServices.child(service.getId()).child("infoReq");
-                service.removeReqiuirement(i);
-                //services.set(index,service);
-                Toast.makeText(getApplicationContext(),"Requirement Updated", Toast.LENGTH_LONG).show();
-                return true;
-            }
-        });*/
-
+        Intent intent = new Intent(welcomescreen_admin.this, ServiceActivity.class);
+        intent.putExtra("SERVICE", service.getId());
+        startActivity(intent);
 
     }
 

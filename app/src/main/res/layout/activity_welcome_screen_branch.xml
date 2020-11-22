@@ -22,7 +22,7 @@
         android:textStyle="italic" />
 
     <TextView
-        android:id="@+id/welcomeMessage"
+        android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/welcomeMessageName"
@@ -34,7 +34,7 @@
         android:textStyle="italic" />
 
     <TextView
-        android:id="@+id/welcome"
+        android:id="@+id/serviceTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/welcomeMessageName"
@@ -48,7 +48,7 @@
         android:textStyle="bold|italic" />
 
     <Button
-        android:id="@+id/btnLogout"
+        android:id="@+id/backServices"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
@@ -61,7 +61,7 @@
         android:id="@+id/services"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/welcomeMessage"
+        android:layout_below="@id/info"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:background="@color/colorAccent"

@@ -16,37 +16,57 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/backServices"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="5dp"
         android:fontFamily="serif-monospace"
         android:gravity="center"
-        android:text="Welcome to\nService Novigrad"
+        android:text="___ Service"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:textStyle="bold|italic" />
 
     <TextView
-        android:id="@+id/welcomeMessageName"
+        android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/serviceTitle"
+        android:layout_below="@id/serviceTitle"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="Hello!"
+        android:gravity="center"
+        android:text="Delete requirements from this \nservice by long clicking them"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="italic" />
 
-    <TextView
-        android:id="@+id/info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/welcomeMessageName"
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/info"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="You are logged in as administrator.\n\n\n\n(Use long click to edit services)"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="italic" />
+        android:orientation="horizontal"
+        tools:layout_below="@id/info">
+
+        <Button
+            android:id="@+id/deleteService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="#3C02A1"
+            android:text=" Delete Service "
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/addRequirement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="#3C02A1"
+            android:text=" Add Requirement "
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/backServices"
@@ -55,34 +75,22 @@
         android:layout_marginTop="10dp"
         android:background="#000000"
         android:fontFamily="sans-serif-condensed-light"
-        android:text="Log out"
+        android:text="Service"
         android:textColor="#FFFFFF" />
-
-    <Button
-        android:id="@+id/addRequirement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/welcomeMessageName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorAccent"
-        android:text="Add Service"
-        android:textAllCaps="false"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        />
 
     <ListView
         android:id="@+id/requirements"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/info"
+        android:layout_below="@id/layout"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="30dp"
-        android:background="@color/colorAccent"
-        android:textColor="#000000"
-        android:textSize="18sp">
+        android:layout_marginBottom="45dp"
+        android:background="#3C02A1"
+        android:textSize="18sp"
+        tools:layout_marginBottom="50dp"
+        tools:textColor="#FFFFFF">
 
     </ListView>
+
 
 </RelativeLayout>
