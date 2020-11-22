@@ -22,10 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignupActivityEmployee" />
-        <activity android:name=".SignupActivityCustomer" />
+        <activity android:name=".SignupActivity" />
         <activity android:name=".ChooseTypeActivity" />
-        <activity android:name=".WelcomeScreen" />
+        <activity android:name=".welcomescreen_customer" />
     </application>
 
 </manifest>

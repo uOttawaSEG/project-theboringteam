@@ -18,22 +18,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class WelcomeScreen extends AppCompatActivity {
+public class welcomescreen_customer extends AppCompatActivity {
 
     public TextView welcomeName, welcomeType;
-    public Button logOut, btnDriversLicense, btnPhotoID, btnHealthCard;
+    public Button logOut;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference usersDatabase;
     private String userid;
-    //public String welcome, role;
-    //private User currentUser;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome_screen);
+        setContentView(R.layout.activity_welcome_screen_branch);
 
         welcomeName = findViewById(R.id.welcomeMessageName);
         welcomeType = findViewById(R.id.welcomeMessage);
@@ -68,27 +67,9 @@ public class WelcomeScreen extends AppCompatActivity {
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(WelcomeScreen.this, MainActivity.class));
+                startActivity(new Intent(welcomescreen_customer.this, MainActivity.class));
             }
         });
-        /**btnDriversLicense.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(WelcomeScreen.this, DriversLicense.class));
-            }
-        });
-        btnDriversLicense.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(WelcomeScreen.this, HealthCard.class));
-            }
-        });
-        btnPhotoID.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(WelcomeScreen.this, PhotoID.class));
-            }
-        });*/
     }
 
 

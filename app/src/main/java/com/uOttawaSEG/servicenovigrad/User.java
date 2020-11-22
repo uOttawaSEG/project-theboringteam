@@ -1,19 +1,25 @@
 package com.uOttawaSEG.servicenovigrad;
 
+import java.util.HashMap;
+import java.util.Map;
+
 class User {
     private String _id;
     private String _name;
     private String _email;
     private String _type;
+    private HashMap<String, String> _information;
 
     public User(){
 
     }
+
     public User(String id, String name, String email, String type){
         _id = id;
         _name = name;
         _email = email;
         _type = type;
+        _information = new HashMap<>();
     }
 
 
@@ -40,5 +46,14 @@ class User {
     }
     public String getType() {
         return _type;
+    }
+    public void addInfo(String name, String value){
+        _information.put(name,value);
+    }
+    public String getInfo(String name){
+        return _information.get(name);
+    }
+    public void deleteInfo(String name){
+        _information.remove(name);
     }
 }

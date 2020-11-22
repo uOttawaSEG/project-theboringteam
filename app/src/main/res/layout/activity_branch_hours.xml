@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    tools:context=".MainActivity">
+
+    <GridLayout
+        android:id="@+id/timesGrid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnBack"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:columnCount="3"
+        android:orientation="horizontal"
+        android:rowCount="7"
+        tools:context=".GridLayoutActivity">
+
+        <TextView
+            android:id="@+id/sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="6"
+            android:text="Sunday:"
+            android:textColor="@color/colorAccent" />
+
+        <EditText
+            android:id="@+id/startSunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:hint="Open"
+            android:inputType="textPersonName"
+            android:textColorHint="#8A9C9A" />
+
+        <EditText
+            android:textColorHint="#8A9C9A"
+            android:id="@+id/endSunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:hint="Close"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:text="Monday:"
+            android:textColor="@color/colorAccent" />
+
+        <EditText
+            android:textColorHint="#8A9C9A"
+            android:id="@+id/startMonday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:hint="Open"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:textColorHint="#8A9C9A"
+            android:id="@+id/endMonday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:hint="Close"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:text="Tuesday:"
+            android:textColor="@color/colorAccent" />
+
+        <EditText
+            android:textColorHint="#8A9C9A"
+            android:id="@+id/startTuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:hint="Open"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:textColorHint="#8A9C9A"
+            android:id="@+id/endTuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:hint="Close"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/wednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:text="Wednesday:"
+            android:textColor="@color/colorAccent" />
+
+        <EditText
+            android:textColorHint="#8A9C9A"
+            android:id="@+id/startWednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:hint="Open"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:textColorHint="#8A9C9A"
+            android:id="@+id/endWednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:hint="Close"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:text="Thursday:"
+            android:textColor="@color/colorAccent" />
+
+        <EditText
+            android:textColorHint="#8A9C9A"
+            android:id="@+id/startThursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:hint="Open"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:textColorHint="#8A9C9A"
+            android:id="@+id/endThursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:hint="Close"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/friday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:text="Friday:"
+            android:textColor="@color/colorAccent" />
+
+        <EditText
+            android:textColorHint="#8A9C9A"
+            android:id="@+id/startFriday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:hint="Open"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:textColorHint="#8A9C9A"
+            android:id="@+id/endFriday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:hint="Close"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:text="Saturday:"
+            android:textColor="@color/colorAccent" />
+
+        <EditText
+            android:textColorHint="#8A9C9A"
+            android:id="@+id/startSaturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:hint="Open"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:textColorHint="#8A9C9A"
+            android:id="@+id/endSaturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="6"
+            android:hint="Close"
+            android:inputType="textPersonName" />
+    </GridLayout>
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="#000000"
+        android:fontFamily="sans-serif-condensed-light"
+        android:text="Back"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timesGrid"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        android:background="@color/colorAccent"
+        android:text="Save Settings" />
+
+
+</RelativeLayout>

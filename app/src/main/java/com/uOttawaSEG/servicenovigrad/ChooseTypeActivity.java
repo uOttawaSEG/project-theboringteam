@@ -32,14 +32,21 @@ public class ChooseTypeActivity extends AppCompatActivity {
         mBtnCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChooseTypeActivity.this, SignupActivityCustomer.class));
+
+                Intent intent = new Intent(ChooseTypeActivity.this, SignupActivity.class);
+                intent.putExtra("ACCOUNT_TYPE", "customer");
+                startActivity(intent);
             }
         });
+
         mBtnEmployee= findViewById(R.id.btnEmployee);
         mBtnEmployee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChooseTypeActivity.this, SignupActivityEmployee.class));
+
+                Intent intent = new Intent(ChooseTypeActivity.this, SignupActivity.class);
+                intent.putExtra("ACCOUNT_TYPE", "employee");
+                startActivity(intent);
             }
         });
     }

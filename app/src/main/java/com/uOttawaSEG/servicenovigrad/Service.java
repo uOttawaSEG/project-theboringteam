@@ -11,17 +11,20 @@ public class Service{
     private String name;
     private HashMap reqInfo;
     private Integer nextReq;
+    private String id;
 
-    public Service(String name){
+    public Service(String name, String id){
         this.name = name;
+        this.id = id;
         reqInfo = new HashMap<String,String>();
         nextReq = 0;
     }
 
-    public Service(String name, HashMap reqInfo,Integer nextReq){
+    public Service(String name, HashMap reqInfo,Integer nextReq, String id){
         this.name = name;
         this.reqInfo = reqInfo;
         this.nextReq = nextReq;
+        this.id = id;
     }
 
     public String getName(){
@@ -37,6 +40,8 @@ public class Service{
     public String getRequiremnt(String key){
         return (String) reqInfo.get(key);
     }
+
+    public String getId(){return id;}
 
     public void removeReqiuirement(int index){
         reqInfo.remove(index);

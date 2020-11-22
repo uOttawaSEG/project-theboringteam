@@ -30,13 +30,14 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
-public class welcomescreen_admin extends AppCompatActivity {
+public class welcomescreen_branch extends AppCompatActivity {
 
     Button buttonAddService;
     ListView listViewServices;
     DatabaseReference databaseServices;
 
-    final List<Service> services = new ArrayList<Service>();
+    final List<Service> services = new ArrayList<>();
+
 
 
     @Override
@@ -59,6 +60,7 @@ public class welcomescreen_admin extends AppCompatActivity {
         listViewServices.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
                 Service selected = services.get(i);
                 if(selected == null){
                     toastMessage("broken");
@@ -84,7 +86,6 @@ public class welcomescreen_admin extends AppCompatActivity {
                     String nameS = postSnapshot.child("name").getValue(String.class);
                     HashMap<String,String> reqInfo = new HashMap<>();
                     Integer nextReq = postSnapshot.child("nextReq").getValue(Integer.class);
-                    String id = postSnapshot.child("id").getValue(String.class);
 
                     try {
                         for (DataSnapshot postpostSnapshot : postSnapshot.child("reqInfo").getChildren()) {
@@ -92,8 +93,11 @@ public class welcomescreen_admin extends AppCompatActivity {
 
                         }
                     }catch(Exception e){
-                        toastMessage("error loading data");
+                        toastMessage("Corrupt data. See database for repair.");
                     }
+
+                    String id = postSnapshot.getKey();
+
 
                     Service service = new Service(nameS, reqInfo,nextReq,id);
                     services.add(service);
@@ -102,7 +106,7 @@ public class welcomescreen_admin extends AppCompatActivity {
 
 
 
-                ServiceList sAdapter = new ServiceList(welcomescreen_admin.this, services);
+                ServiceList sAdapter = new ServiceList(welcomescreen_branch.this, services);
 
                 listViewServices.setAdapter(sAdapter);
 
@@ -123,7 +127,6 @@ public class welcomescreen_admin extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
         final Service service = tempService;
 
-
         final TextView title = dialogView.findViewById(R.id.serviceTitle);
         final EditText editTextName = dialogView.findViewById(R.id.addReq);
         final Button buttonCancel = dialogView.findViewById(R.id.buttonCancel);
@@ -131,7 +134,13 @@ public class welcomescreen_admin extends AppCompatActivity {
         final Button addReq = dialogView.findViewById(R.id.buttonCreate);
         final ListView displayReq = dialogView.findViewById(R.id.listViewReq);
 
+
+
         title.setText("Update or Delete objects from "+ service.getName());
+
+        //RequirementList rAdapter = new RequirementList(this, service);
+
+        //displayReq.setAdapter(rAdapter);
 
         dialogBuilder.setTitle("Update/Delete Service");
         final AlertDialog b = dialogBuilder.create();
@@ -146,8 +155,6 @@ public class welcomescreen_admin extends AppCompatActivity {
                     service.addInfo(req);
                     //saving the product
                     databaseServices.child(service.getId()).setValue(service);
-
-                    services.set(index,service);
 
                     services.add(service);
 
@@ -167,10 +174,10 @@ public class welcomescreen_admin extends AppCompatActivity {
             public void onClick(View view) {
 
                 if(databaseServices.child(service.getId()).removeValue().isSuccessful()) {
-                        services.remove(service.getId());
+                    services.remove(service.getId());
 
-                        Toast.makeText(getApplicationContext(), "Service Deleted", Toast.LENGTH_LONG).show();
-                        b.dismiss();
+                    Toast.makeText(getApplicationContext(), "Service Deleted", Toast.LENGTH_LONG).show();
+                    b.dismiss();
 
                 }
                 else{

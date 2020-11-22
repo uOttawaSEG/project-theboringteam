@@ -20,7 +20,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class SignupActivityCustomer extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
 
     public EditText mEmail, mPassword, mUsername;
     public Button mBtnSignUp, mBtnBack;
@@ -34,7 +34,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup_customer);
+        setContentView(R.layout.activity_signup);
 
         mUsername = findViewById(R.id.username);
         mEmail = findViewById(R.id.email);
@@ -68,7 +68,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
                 }
                 for(int i = 0; i<name.length();i++) {
                     if (!Character.isLetter(name.charAt(i)) || (name.charAt(i) == ' ')) {
-                        mUsername.setError("Please enter an actual name");
+                        mUsername.setError("Please enter a name with only letters");
                         mUsername.requestFocus();
                         canSignIn = false;
                         break;
@@ -87,7 +87,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
 
                 if(canSignIn) {
                     mAuth.createUserWithEmailAndPassword(email,pass)
-                            .addOnCompleteListener(SignupActivityCustomer.this, new OnCompleteListener<AuthResult>() {
+                            .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
@@ -99,7 +99,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                         FirebaseUser mUser = mAuth.getCurrentUser();
 
                                         //Creating a local user
-                                        user = new User(mUser.getUid(),name,email,"customer");
+                                        user = new User(mUser.getUid(),name,email,getIntent().getStringExtra("ACCOUNT_TYPE"));
                                         mRef = mDB.getReference("Users/"+mUser.getUid());
 
                                         //Setting the local user to firebase
@@ -114,7 +114,7 @@ public class SignupActivityCustomer extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
-                                                    startActivity(new Intent(SignupActivityCustomer.this, WelcomeScreen.class));
+                                                    startActivity(new Intent(SignupActivity.this, welcomescreen_customer.class));
                                                 }
                                             }
                                         });
