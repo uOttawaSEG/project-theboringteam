@@ -1,5 +1,6 @@
 package com.uOttawaSEG.servicenovigrad;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ import java.util.List;
 
 public class welcomescreen_branch extends AppCompatActivity {
 
-    Button buttonAddService;
+    Button buttonAddService, hours;
     ListView listViewServices;
     DatabaseReference databaseServices, databaseBranch, database;
     TextView title,name;
@@ -49,7 +50,7 @@ public class welcomescreen_branch extends AppCompatActivity {
         buttonAddService = findViewById(R.id.addService);
         title = findViewById(R.id.serviceTitle);
         name = findViewById(R.id.welcomeMessageName);
-
+        hours = findViewById(R.id.hours);
 
         mAuth = FirebaseAuth.getInstance();
         mUserID = mAuth.getCurrentUser().getUid();
@@ -61,6 +62,15 @@ public class welcomescreen_branch extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addService();
+            }
+        });
+
+        hours.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(welcomescreen_branch.this, branchHours.class);
+                intent.putExtra("Branches", branch.getId());
+                startActivity(new Intent(welcomescreen_branch.this, branchHours.class));
             }
         });
 
