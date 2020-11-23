@@ -20,10 +20,8 @@ public class branchHours extends AppCompatActivity {
     TimePicker monTimePickOut, tueTimePickOut, wedTimePickOut, thuTimePickOut, friTimePickOut, satTimePickOut, sunTimePickOut;
     Button btnBack, btnSaveBranchTime;
     TextView mondayTime, tuesdayTime, wednesdayTime, thursdayTime, fridayTime, saturdayTime, sundayTime;
-    private FirebaseAuth mAuth;
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference usersDatabase;
-    private String userid;
+    public DatabaseReference mRef;
+    private FirebaseDatabase mDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,30 +68,73 @@ public class branchHours extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
         btnSaveBranchTime = findViewById(R.id.btnSaveBranchTime);
 
-        mAuth = FirebaseAuth.getInstance();
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        final FirebaseUser user = mAuth.getCurrentUser();
-        userid = user.getUid();
-        usersDatabase = mFirebaseDatabase.getReference("Branches").child(userid);
+
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(branchHours.this, MainActivity.class));
-
+                finish();
 
             }
         });
         btnSaveBranchTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int monday_minutes = simpleTimePicker.getCurrentMinute();
+                int mondayMinutesIn = monTimePickIn.getCurrentMinute();
+                int mondayHoursIn = monTimePickIn.getCurrentHour();
+                String mondayTimeIn = mondayHoursIn+":"+mondayMinutesIn;
+                int tuesdayMinutesIn = tueTimePickIn.getCurrentMinute();
+                int tuesdayHoursIn = tueTimePickIn.getCurrentHour();
+                String tuesdayTimeIn = tuesdayHoursIn+":"+tuesdayMinutesIn;
+                int wednesdayMinutesIn = wedTimePickIn.getCurrentMinute();
+                int wednesdayHoursIn = wedTimePickIn.getCurrentHour();
+                String wednesdayTimeIn = wednesdayHoursIn+":"+wednesdayMinutesIn;
+                int thursdayMinutesIn = thuTimePickIn.getCurrentMinute();
+                int thursdayHoursIn = thuTimePickIn.getCurrentHour();
+                String thursdayTimeIn = thursdayHoursIn+":"+thursdayMinutesIn;
+                int fridayMinutesIn = friTimePickIn.getCurrentMinute();
+                int fridayHoursIn = friTimePickIn.getCurrentHour();
+                String fridayTimeIn = fridayHoursIn+":"+fridayMinutesIn;
+                int saturdayMinutesIn = satTimePickIn.getCurrentMinute();
+                int saturdayHoursIn = satTimePickIn.getCurrentHour();
+                String saturdayTimeIn = saturdayHoursIn+":"+saturdayMinutesIn;
+                int sundayMinutesIn = sunTimePickIn.getCurrentMinute();
+                int sundayHoursIn = sunTimePickIn.getCurrentHour();
+                String sundayTimeIn = sundayHoursIn+":"+sundayMinutesIn;
 
-                mRef = mDB.getReference("Users/"+mUser.getUid());
+                int mondayMinutesOut = monTimePickOut.getCurrentMinute();
+                int mondayHoursOut = monTimePickOut.getCurrentHour();
+                String mondayTimeOut = mondayHoursOut+":"+mondayMinutesOut;
+                int tuesdayMinutesOut = tueTimePickOut.getCurrentMinute();
+                int tuesdayHoursOut = tueTimePickOut.getCurrentHour();
+                String tuesdayTimeOut = tuesdayHoursOut+":"+tuesdayMinutesOut;
+                int wednesdayMinutesOut = wedTimePickOut.getCurrentMinute();
+                int wednesdayHoursOut = wedTimePickOut.getCurrentHour();
+                String wednesdayTimeOut = wednesdayHoursOut+":"+wednesdayMinutesOut;
+                int thursdayMinutesOut = thuTimePickIn.getCurrentMinute();
+                int thursdayHoursOut = thuTimePickIn.getCurrentHour();
+                String thursdayTimeOut = thursdayHoursOut+":"+thursdayMinutesOut;
+                int fridayMinutesOut = friTimePickIn.getCurrentMinute();
+                int fridayHoursOut = friTimePickIn.getCurrentHour();
+                String fridayTimeOut = fridayHoursOut+":"+fridayMinutesOut;
+                int saturdayMinutesOut = satTimePickIn.getCurrentMinute();
+                int saturdayHoursOut = satTimePickIn.getCurrentHour();
+                String saturdayTimeOut = saturdayHoursOut+":"+saturdayMinutesOut;
+                int sundayMinutesOut = sunTimePickIn.getCurrentMinute();
+                int sundayHoursOut = sunTimePickIn.getCurrentHour();
+                String sundayTimeOut = sundayHoursOut+":"+sundayMinutesOut;
 
-                //Setting the local user to firebase
-                mRef.setValue(user);
-
+                mDB = FirebaseDatabase.getInstance();
+                String branchID = getIntent().getStringExtra("Branches");
+                mRef = mDB.getReference("Branches").child(branchID).child("workingHours");
+                mRef.child("Monday").setValue(mondayTimeIn+" - "+mondayTimeOut);
+                mRef.child("Tuesday").setValue(tuesdayTimeIn+" - "+tuesdayTimeOut);
+                mRef.child("Wednesday").setValue(wednesdayTimeIn+" - "+wednesdayTimeOut);
+                mRef.child("Thursday").setValue(thursdayTimeIn+" - "+thursdayTimeOut);
+                mRef.child("Friday").setValue(fridayTimeIn+" - "+fridayTimeOut);
+                mRef.child("Saturday").setValue(saturdayTimeIn+" - "+saturdayTimeOut);
+                mRef.child("Sunday").setValue(sundayTimeIn+" - "+sundayTimeOut);
+                finish();
             }
         });
     }

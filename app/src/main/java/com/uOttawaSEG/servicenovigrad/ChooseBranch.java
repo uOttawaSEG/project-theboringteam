@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +33,12 @@ public class ChooseBranch extends AppCompatActivity {
     ListView listViewBranches;
     DatabaseReference databaseBranches;
 
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase mFirebaseDatabase;
+    private String userid;
+    private String branchid;
+    private FirebaseUser user;
+
     final List<Branch> branches = new ArrayList<Branch>();
 
     @Override
@@ -40,6 +48,9 @@ public class ChooseBranch extends AppCompatActivity {
 
         listViewBranches = findViewById(R.id.listViewBranches);
         btnAddBranch = findViewById(R.id.addBranch);
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
 
         databaseBranches= FirebaseDatabase.getInstance().getReference("Branches");
 
@@ -61,9 +72,7 @@ public class ChooseBranch extends AppCompatActivity {
         listViewBranches.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ChooseBranch.this, welcomescreen_branch.class);
-                intent.putExtra("branch_name", "test branch");
-                startActivity(intent);
+                setBranch(position);
             }
         });
     }
@@ -135,6 +144,7 @@ public class ChooseBranch extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
 
         final EditText editTextName = dialogView.findViewById(R.id.editTextName);
+        final EditText address = dialogView.findViewById(R.id.address);
         final Button buttonCancel = dialogView.findViewById(R.id.buttonCancel);
         final Button buttonCreate = dialogView.findViewById(R.id.buttonCreate);
 
@@ -146,13 +156,14 @@ public class ChooseBranch extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String name = editTextName.getText().toString().trim();
+                String branchAddress = address.getText().toString().trim();
                 if (!TextUtils.isEmpty(name)) {
                     //getting a unique id using push().getKey() method
                     //it will create a unique id and we will use it as the primary key for our product
                     String id = databaseBranches.push().getKey();
 
                     //creating a Branch object
-                    Branch branch = new Branch(name,id);
+                    Branch branch = new Branch(name,id,branchAddress);
 
                     //saving the Branch into firebase
                     databaseBranches.child(id).setValue(branch);
@@ -174,6 +185,15 @@ public class ChooseBranch extends AppCompatActivity {
                 b.dismiss();
             }
         });
+    }
+
+    private void setBranch(int index){
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        userid = user.getUid();
+        branchid = branches.get(index).getId();
+        mFirebaseDatabase.getReference("Users").child(userid).child("branch_id").setValue(branchid);
+
+        startActivity(new Intent(ChooseBranch.this, welcomescreen_branch.class));
     }
     private void toastMessage(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();

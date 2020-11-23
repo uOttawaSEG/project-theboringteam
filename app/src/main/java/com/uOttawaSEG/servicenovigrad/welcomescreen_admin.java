@@ -40,7 +40,7 @@ public class welcomescreen_admin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen_administrator);
 
-        listViewServices = findViewById(R.id.requirements);
+        listViewServices = findViewById(R.id.listViewServices);
         buttonAddService = findViewById(R.id.addRequirement);
 
         databaseServices= FirebaseDatabase.getInstance().getReference("Services");

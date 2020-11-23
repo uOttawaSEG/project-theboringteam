@@ -1,5 +1,6 @@
 package com.uOttawaSEG.servicenovigrad;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,33 +25,52 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class welcomescreen_branch extends AppCompatActivity {
 
-    Button buttonAddService;
+    Button buttonAddService, hours;
     ListView listViewServices;
-    DatabaseReference databaseServices;
+    DatabaseReference databaseServices, databaseBranch, database;
+    TextView title,name;
+    private FirebaseAuth mAuth;
+    private String mUserID;
+    Branch branch;
+    int nextService;
 
     final List<Service> services = new ArrayList<>();
-
-
+    final List<String> servicesID = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome_screen_administrator);
+        setContentView(R.layout.activity_welcome_screen_branch);
 
-        listViewServices = findViewById(R.id.requirements);
-        buttonAddService = findViewById(R.id.addRequirement);
+        listViewServices = findViewById(R.id.listViewServices);
+        buttonAddService = findViewById(R.id.addService);
+        title = findViewById(R.id.serviceTitle);
+        name = findViewById(R.id.welcomeMessageName);
+        hours = findViewById(R.id.hours);
+
+        mAuth = FirebaseAuth.getInstance();
+        mUserID = mAuth.getCurrentUser().getUid();
 
         databaseServices= FirebaseDatabase.getInstance().getReference("Services");
+        database= FirebaseDatabase.getInstance().getReference();
 
         buttonAddService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addService();
+            }
+        });
+
+        hours.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(welcomescreen_branch.this, branchHours.class);
+                intent.putExtra("Branches", branch.getId());
+                startActivity(new Intent(welcomescreen_branch.this, branchHours.class));
             }
         });
 
@@ -68,42 +89,49 @@ public class welcomescreen_branch extends AppCompatActivity {
         });
     }
 
+
+
     @Override
     protected void onStart() {
         super.onStart();
         //attaching value listener event
-        databaseServices.addValueEventListener(new ValueEventListener() {
+        database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                services.clear();
 
-                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    //getting product
-                    String nameS = postSnapshot.child("name").getValue(String.class);
-                    HashMap<String,String> reqInfo = new HashMap<>();
-                    Integer nextReq = postSnapshot.child("nextReq").getValue(Integer.class);
+                String branchID = dataSnapshot.child("Users").child(mUserID).child("branch_id").getValue(String.class);
+                databaseBranch= FirebaseDatabase.getInstance().getReference("Branches").child(branchID);
+                
+                name.setText(dataSnapshot.child("Users").child(mUserID).child("name").getValue(String.class));
 
-                    try {
-                        for (DataSnapshot postpostSnapshot : postSnapshot.child("reqInfo").getChildren()) {
-                            reqInfo.put(postpostSnapshot.getKey(), postpostSnapshot.getValue(String.class));
+                servicesID.clear();
+                branch = new Branch();
 
-                        }
-                    }catch(Exception e){
-                        toastMessage("Corrupt data. See database for repair.");
-                    }
+                branch.setAddress(dataSnapshot.child("address").getValue(String.class));
+                branch.setId(dataSnapshot.getKey());
+                branch.setName(dataSnapshot.child("name").getValue(String.class));
 
-                    String id = postSnapshot.getKey();
+                title.setText("Welcome to\n"+branch.getName()+"Branch!");
 
+                for(DataSnapshot postSnapshot : dataSnapshot.child("Branches").child(branchID).getChildren()){
 
-                    Service service = new Service(nameS, reqInfo,nextReq,id);
-                    services.add(service);
+                    String serviceID = postSnapshot.getValue(String.class);
+                    servicesID.add(serviceID);
 
                 }
 
+                services.clear();
 
+                for(String id : servicesID) {
+
+                    if(dataSnapshot.child("Services").child(id).child("name").exists()){
+                        String nameS = dataSnapshot.child("Services").child(id).child("name").getValue(String.class);
+                        Service service = new Service(nameS, id);
+                        services.add(service);
+                    }
+                }
 
                 ServiceList sAdapter = new ServiceList(welcomescreen_branch.this, services);
-
                 listViewServices.setAdapter(sAdapter);
 
             }
@@ -111,6 +139,8 @@ public class welcomescreen_branch extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error){}
         });
+
+
     }
 
 
