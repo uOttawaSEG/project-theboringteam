@@ -82,16 +82,21 @@ public class MainActivity extends AppCompatActivity {
     private void directUserLogin(){
         mAuth = FirebaseAuth.getInstance();
         mUserID = mAuth.getCurrentUser().getUid();
-        mDB = FirebaseDatabase.getInstance().getReference().child("Users").child(mUserID);
+        mDB = FirebaseDatabase.getInstance().getReference();
         mDB.addListenerForSingleValueEvent(new ValueEventListener() {
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String userType = dataSnapshot.child("type").getValue(String.class);
-                boolean hasBranch = dataSnapshot.child("branch_id").exists();
+                String userType = dataSnapshot.child("Users").child(mUserID).child("type").getValue(String.class);
+                String branchID = dataSnapshot.child("Users").child(mUserID).child("branch_id").getValue(String.class);
+                boolean hasBranch = dataSnapshot.child("Users").child(mUserID).child("branch_id").exists()
+                        && dataSnapshot.child("Branches").child(
+                                dataSnapshot.child("Users").child(mUserID).child("branch_id").getValue(String.class)).exists();
 
                 if (userType.equals("customer")) {
                     startActivity(new Intent(MainActivity.this, welcomescreen_customer.class));
                 } else if(userType.equals("employee") && hasBranch) {
-                    startActivity(new Intent(MainActivity.this, welcomescreen_branch.class));
+                    Intent intent = new Intent(MainActivity.this, welcomescreen_branch.class);
+                    intent.putExtra("branchID", branchID);
+                    startActivity(intent);
                 } else if(userType.equals("employee")){
                     startActivity(new Intent(MainActivity.this, ChooseBranch.class));
                 } else if(userType.equals("admin")) {

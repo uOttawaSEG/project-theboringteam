@@ -3,7 +3,9 @@ package com.uOttawaSEG.servicenovigrad;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -30,7 +32,6 @@ public class welcomescreen_branch_2 extends AppCompatActivity {
     private ListView listViewServicesBranch;
     private Button btnAddService;
     private DatabaseReference servicesDB;
-    private DatabaseReference branchServicesDb;
 
     final List<Service> services = new ArrayList<Service>();
     final List<Service> listBranchServices = new ArrayList<Service>();
@@ -40,11 +41,6 @@ public class welcomescreen_branch_2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcomescreen_branch_2);
-
-        //get current user
-
-        //get the service name
-
         listViewServicesBranch = findViewById(R.id.listViewBranchServices);
         btnAddService = findViewById(R.id.addService);
         btnAddService.setOnClickListener(new View.OnClickListener() {
@@ -53,33 +49,44 @@ public class welcomescreen_branch_2 extends AppCompatActivity {
                 displayServicesAvailable();
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        branchServicesDb = FirebaseDatabase.getInstance().getReference("Branches");
-        branchServicesDb.addValueEventListener(new ValueEventListener() {
+        listViewServicesBranch.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listBranchServices.clear();
-                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    String nameS = postSnapshot.child("name").getValue(String.class);
-                    String id = postSnapshot.child("id").getValue(String.class);
-                    Service service = new Service(nameS,id);
-                    listBranchServices.add(service);
-                }
-                ServiceList branchAdapter = new ServiceList(welcomescreen_branch_2.this, listBranchServices);
-                listViewServicesBranch.setAdapter(branchAdapter);
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Service service = services.get(i);
+                showDeleteDialog(service.getId(),service.getName());
+                return true;
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error){}
         });
     }
 
+     @Override
+        protected void onStart() {
+            super.onStart();
+            String branchid = getIntent().getStringExtra("branchID");
+            servicesDB = FirebaseDatabase.getInstance().getReference("Branches").child(branchid).child("services");
+            servicesDB.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    listBranchServices.clear();
+                    for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        String nameS = postSnapshot.getValue(String.class);
+                        String id = postSnapshot.getKey();
+                        Service service = new Service(nameS,id);
+                        toastMessage(id);
+                        listBranchServices.add(service);
+                    }
+                    ServiceList branchAdapter = new ServiceList(welcomescreen_branch_2.this, listBranchServices);
+                    listViewServicesBranch.setAdapter(branchAdapter);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error){}
+            });
+        }
+
     public void displayServicesAvailable() {
         // setup the alert builder
+        final String branchid = getIntent().getStringExtra("branchID");
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose a service");
         servicesDB = FirebaseDatabase.getInstance().getReference("Services");
@@ -97,9 +104,10 @@ public class welcomescreen_branch_2 extends AppCompatActivity {
                 builder.setAdapter(serviceAdapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        toastMessage("You clicked on: ");
-                        String id = branchServicesDb.push().getKey();
-                        //Service service = new Service(name,id);
+                        Service serviceName = serviceAdapter.getItem(which);
+                        toastMessage("You clicked on: " + serviceName.getName());
+                        servicesDB = FirebaseDatabase.getInstance().getReference("Branches").child(branchid).child("services");
+                        servicesDB.child(serviceName.getId()).setValue(serviceName.getName());
                     }
                 });
                 builder.show();
@@ -111,6 +119,44 @@ public class welcomescreen_branch_2 extends AppCompatActivity {
         });
 
     }
+    private void showDeleteDialog(final String serviceID, String serviceName) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.dialog_update_branch_service, null);
+        dialogBuilder.setView(dialogView);
+
+        final TextView title = dialogView.findViewById(R.id.serviceTitle);
+        final Button buttonCancel = dialogView.findViewById(R.id.buttonCancel);
+        final Button buttonDelete = dialogView.findViewById(R.id.buttonDelete);
+
+        title.setText(serviceName);
+        final AlertDialog b = dialogBuilder.create();
+        b.show();
+
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteBranchService(serviceID);
+                b.dismiss();
+            }
+        });
+
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                b.dismiss();
+            }
+        });
+    }
+    private void deleteBranchService(String id){
+        String branchid = getIntent().getStringExtra("branchID");
+        //getting the branch service to be deleted from firebase
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("Branches").child(branchid).child("services").child(id);
+        //deleting the branch service
+        dR.removeValue();
+        toastMessage("Branch service deleted");
+    }
+
     private void toastMessage(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }

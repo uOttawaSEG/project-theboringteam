@@ -47,7 +47,7 @@ public class ServiceActivity extends AppCompatActivity {
         btnDelete = findViewById(R.id.deleteService);
         title = findViewById(R.id.serviceTitle);
 
-        databaseService= FirebaseDatabase.getInstance().getReference("Services/"+getIntent().getStringExtra("SERVICE"));
+        databaseService= FirebaseDatabase.getInstance().getReference("Services").child(getIntent().getStringExtra("SERVICE"));
 
 
 
@@ -189,6 +189,35 @@ public class ServiceActivity extends AppCompatActivity {
     private void deleteService(){
 
         databaseService.removeValue();
+
+        DatabaseReference cleanerDB = FirebaseDatabase.getInstance().getReference("Branches");
+
+        cleanerDB.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                DatabaseReference branchRef = FirebaseDatabase.getInstance().getReference("Branches");
+
+                for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                    String branchID = postSnapshot.getKey();
+                    branchRef.child(branchID).child("services").child(getIntent().getStringExtra("SERVICE")).removeValue();
+
+                }
+
+
+
+                RequirementList sAdapter = new RequirementList(ServiceActivity.this, requirementsID,reqInfo);
+
+                requirementsListview.setAdapter(sAdapter);
+
+                title.setText(dataSnapshot.child("name").getValue().toString());
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error){}
+        });
 
         finish();
     }
