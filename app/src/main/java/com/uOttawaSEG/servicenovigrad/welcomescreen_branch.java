@@ -91,15 +91,15 @@ public class welcomescreen_branch extends AppCompatActivity {
 
                 String branchID = dataSnapshot.child("Users").child(mUserID).child("branch_id").getValue(String.class);
                 databaseBranch= FirebaseDatabase.getInstance().getReference("Branches").child(branchID);
-                
+
                 name.setText(dataSnapshot.child("Users").child(mUserID).child("name").getValue(String.class));
 
                 servicesID.clear();
                 branch = new Branch();
 
-                branch.setAddress(dataSnapshot.child("address").getValue(String.class));
-                branch.setId(dataSnapshot.getKey());
-                branch.setName(dataSnapshot.child("name").getValue(String.class));
+                branch.setAddress(dataSnapshot.child("Branches").child(branchID).child("address").getValue(String.class));
+                branch.setId(branchID);
+                branch.setName(dataSnapshot.child("Branches").child(branchID).child("name").getValue(String.class));
 
                 title.setText("Welcome to\n"+branch.getName()+"Branch!");
 
