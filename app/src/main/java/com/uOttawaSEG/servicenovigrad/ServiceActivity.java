@@ -23,7 +23,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ServiceActivity extends AppCompatActivity {
 
@@ -42,7 +41,7 @@ public class ServiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
 
-        requirementsListview = findViewById(R.id.requirements);
+        requirementsListview = findViewById(R.id.listViewServices);
         btnAdd = findViewById(R.id.addRequirement);
         btnBack = findViewById(R.id.backServices);
         btnDelete = findViewById(R.id.deleteService);

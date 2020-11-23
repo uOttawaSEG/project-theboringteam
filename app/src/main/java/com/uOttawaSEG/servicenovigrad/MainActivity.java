@@ -14,12 +14,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class MainActivity extends AppCompatActivity {
     public EditText mEmail, mPassword;
     public Button mBtnSignUp, mBtnSignIn;
     private FirebaseAuth mAuth;
+    private DatabaseReference mDB;
+    private String mUserID;
 
 
     @Override
@@ -55,10 +62,7 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        if("joDPeX1hEPRFCm4VxkoA3pN384v1".equals(mAuth.getCurrentUser().getUid()))
-                                            startActivity(new Intent(MainActivity.this, welcomescreen_admin.class));
-                                        else
-                                            startActivity(new Intent(MainActivity.this, ChooseBranch.class));
+                                        directUserLogin();
                                     } else {
                                         toastMessage("Login information not found in database. Check fields again!");
                                     }
@@ -71,6 +75,35 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ChooseTypeActivity.class));
+            }
+        });
+    }
+
+    private void directUserLogin(){
+        mAuth = FirebaseAuth.getInstance();
+        mUserID = mAuth.getCurrentUser().getUid();
+        mDB = FirebaseDatabase.getInstance().getReference().child("Users").child(mUserID);
+        mDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String userType = dataSnapshot.child("type").getValue(String.class);
+                boolean hasBranch = dataSnapshot.child("branch_id").exists();
+
+                if (userType.equals("customer")) {
+                    startActivity(new Intent(MainActivity.this, welcomescreen_customer.class));
+                } else if(userType.equals("employee") && hasBranch) {
+                    startActivity(new Intent(MainActivity.this, welcomescreen_branch.class));
+                } else if(userType.equals("employee")){
+                    startActivity(new Intent(MainActivity.this, ChooseBranch.class));
+                } else if(userType.equals("admin")) {
+                    startActivity(new Intent(MainActivity.this, welcomescreen_admin.class));
+                } else{
+                    toastMessage("corrupt account: contact administrator");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }

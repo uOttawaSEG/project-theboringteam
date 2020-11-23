@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ServiceList extends ArrayAdapter<Service> {
         private Activity context;
-        List<Service> services;
+        private List<Service> services;
 
         public ServiceList(Activity context, List<Service> services) {
                 super(context, R.layout.activity_list, new ArrayList(services));

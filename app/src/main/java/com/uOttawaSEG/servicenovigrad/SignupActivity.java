@@ -114,7 +114,18 @@ public class SignupActivity extends AppCompatActivity {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()) {
-                                                    startActivity(new Intent(SignupActivity.this, welcomescreen_customer.class));
+
+                                                    if(getIntent().getStringExtra("ACCOUNT_TYPE").equals("customer")) {
+                                                        startActivity(new Intent(SignupActivity.this, welcomescreen_customer.class));
+                                                    }
+                                                    else if(getIntent().getStringExtra("ACCOUNT_TYPE").equals("employee")) {
+                                                        startActivity(new Intent(SignupActivity.this, ChooseBranch.class));
+                                                    }
+                                                    else {
+                                                        toastMessage("error loading profile");
+                                                    }
+
+
                                                 }
                                             }
                                         });

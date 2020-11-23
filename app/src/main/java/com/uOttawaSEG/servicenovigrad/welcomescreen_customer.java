@@ -32,7 +32,7 @@ public class welcomescreen_customer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome_screen_branch);
+        setContentView(R.layout.activity_welcome_screen_customer);
 
         welcomeName = findViewById(R.id.welcomeMessageName);
         welcomeType = findViewById(R.id.info);

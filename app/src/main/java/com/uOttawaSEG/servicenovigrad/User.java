@@ -8,6 +8,7 @@ class User {
     private String _name;
     private String _email;
     private String _type;
+    private String branch_id;
     private HashMap<String, String> _information;
 
     public User(){
@@ -55,5 +56,16 @@ class User {
     }
     public void deleteInfo(String name){
         _information.remove(name);
+    }
+    public void setBranch(String id){
+        if(_type.equals("employee")){
+            this.branch_id = id;
+        }
+        else{
+            return;
+        }
+    }
+    public String getBranch(){
+        return this.branch_id;
     }
 }
