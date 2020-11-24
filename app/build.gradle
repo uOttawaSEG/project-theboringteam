@@ -36,6 +36,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth:20.0.0'
+    implementation 'junit:junit:4.13.1'
+    implementation 'org.hamcrest:hamcrest-library:1.3'
 
     implementation "com.android.support:design:30.0.0"
     //implementation "com.regwuxian.materialedittextKlibrary:2.1.4"

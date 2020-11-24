@@ -30,11 +30,11 @@ import java.util.List;
 
 public class welcomescreen_branch extends AppCompatActivity {
 
-    Button buttonAddService, hours;
+    Button buttonAddService, hours, changeBranch;
     ListView listViewServicesBranch;
     DatabaseReference databaseServices, database;
     TextView title,name;
-    private FirebaseAuth mAuth;
+    //private FirebaseAuth mAuth;
     //private String mUserID;
     private DatabaseReference servicesDB;
 
@@ -52,8 +52,9 @@ public class welcomescreen_branch extends AppCompatActivity {
         title = findViewById(R.id.serviceTitle);
         name = findViewById(R.id.welcomeMessageName);
         hours = findViewById(R.id.hours);
+        changeBranch = findViewById((R.id.changeBranch));
 
-        mAuth = FirebaseAuth.getInstance();
+        //mAuth = FirebaseAuth.getInstance();
         //mUserID = mAuth.getCurrentUser().getUid();
 
         databaseServices= FirebaseDatabase.getInstance().getReference("Services");
@@ -82,6 +83,14 @@ public class welcomescreen_branch extends AppCompatActivity {
                 Service service = listServicesBranch.get(i);
                 showDeleteDialog(service.getId(),service.getName());
                 return true;
+            }
+        });
+
+        changeBranch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(welcomescreen_branch.this, ChooseBranch.class);
+                startActivity(intent);
             }
         });
     }

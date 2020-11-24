@@ -85,7 +85,11 @@ public class ChooseBranch extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 branches.clear();
                 for(DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Branch branch = postSnapshot.getValue(Branch.class);
+                    Branch branch = new Branch();
+                    branch.setName(postSnapshot.child("name").getValue(String.class));
+                    branch.setId(postSnapshot.child("id").getValue(String.class));
+                    branch.setAddress(postSnapshot.child("address").getValue(String.class));
+
                     branches.add(branch);
                 }
                 BranchList branchAdapter = new BranchList(ChooseBranch.this, branches);
@@ -193,7 +197,9 @@ public class ChooseBranch extends AppCompatActivity {
         branchid = branches.get(index).getId();
         mFirebaseDatabase.getReference("Users").child(userid).child("branch_id").setValue(branchid);
 
-        startActivity(new Intent(ChooseBranch.this, welcomescreen_branch.class));
+        Intent intent = new Intent(ChooseBranch.this, welcomescreen_branch.class);
+        intent.putExtra("branchID",branchid);
+        startActivity(intent);
     }
     private void toastMessage(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
