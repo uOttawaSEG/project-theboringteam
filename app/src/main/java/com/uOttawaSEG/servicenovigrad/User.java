@@ -12,7 +12,7 @@ class User {
     private HashMap<String, String> _information;
 
     public User(){
-
+        this._information = new HashMap<>();
     }
 
     public User(String id, String name, String email, String type){

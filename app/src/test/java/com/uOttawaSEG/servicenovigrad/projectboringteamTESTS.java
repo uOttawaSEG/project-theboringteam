@@ -60,7 +60,29 @@ public class projectboringteamTESTS {
     }
 
     @Test
-    public void Test(){
+    public void UserTest(){
+        User tester = new User();
+
+        tester.setEmail("Bob@gmail.com");
+        tester.setId("a1b2c3d4");
+        tester.setName("Bob");
+        tester.setType("employee");
+        tester.setBranch("1A2B3C4D");
+        tester.addInfo("phone_number","123456789");
+
+        String expectedTesterEmail = "Bob@gmail.com";
+        String expectedTesterId ="a1b2c3d4";
+        String expectedTesterName="Bob";
+        String expectedTesterType="employee";
+        String expectedTesterBranch="1A2B3C4D";
+        String expectedTesterPhoneNumber = "123456789";
+
+        assertEquals(tester.getEmail(),expectedTesterEmail);
+        assertEquals(tester.getId(),expectedTesterId);
+        assertEquals(tester.getName(),expectedTesterName);
+        assertEquals(tester.getType(),expectedTesterType);
+        assertEquals(tester.getBranch(),expectedTesterBranch);
+        assertEquals(tester.getInfo("phone_number"),expectedTesterPhoneNumber);
 
     }
 }
