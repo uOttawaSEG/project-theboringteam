@@ -24,6 +24,7 @@
         </activity>
 
         <activity android:name=".ChooseBranch" />
+        <activity android:name=".ServiceRequests" />
         <activity android:name=".welcomescreen_branch" />
         <activity android:name=".ServiceActivity" />
         <activity android:name=".SignupActivity" />

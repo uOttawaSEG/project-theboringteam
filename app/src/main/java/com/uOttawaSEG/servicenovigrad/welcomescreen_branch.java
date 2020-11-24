@@ -30,12 +30,10 @@ import java.util.List;
 
 public class welcomescreen_branch extends AppCompatActivity {
 
-    Button buttonAddService, hours, changeBranch;
+    Button buttonAddService, hours, changeBranch, btnServiceRequest;
     ListView listViewServicesBranch;
     DatabaseReference databaseServices, database;
     TextView title,name;
-    //private FirebaseAuth mAuth;
-    //private String mUserID;
     private DatabaseReference servicesDB;
 
 
@@ -54,8 +52,13 @@ public class welcomescreen_branch extends AppCompatActivity {
         hours = findViewById(R.id.hours);
         changeBranch = findViewById((R.id.changeBranch));
 
-        //mAuth = FirebaseAuth.getInstance();
-        //mUserID = mAuth.getCurrentUser().getUid();
+        btnServiceRequest = findViewById(R.id.requests);
+        btnServiceRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(welcomescreen_branch.this, ServiceRequests.class));
+            }
+        });
 
         databaseServices= FirebaseDatabase.getInstance().getReference("Services");
         database= FirebaseDatabase.getInstance().getReference();
@@ -110,7 +113,6 @@ public class welcomescreen_branch extends AppCompatActivity {
                     String nameS = postSnapshot.getValue(String.class);
                     String id = postSnapshot.getKey();
                     Service service = new Service(nameS,id);
-                    //toastMessage(id);
                     listServicesBranch.add(service);
                 }
                 ServiceList branchAdapter = new ServiceList(welcomescreen_branch.this, listServicesBranch);
