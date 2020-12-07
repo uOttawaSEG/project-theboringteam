@@ -1,6 +1,7 @@
 package com.uOttawaSEG.servicenovigrad;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,24 +21,32 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class listOfServicesCustomer extends AppCompatActivity {
 
     ListView listOfCustomerServices;
+    TextView textView;
     private DatabaseReference servicesDB;
     final List<Service> services = new ArrayList<>();
     final List<Service> listServicesBranch = new ArrayList<Service>();
-    public DatabaseReference mRef;
-    private FirebaseDatabase mDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_of_services_customer);
 
+        textView = findViewById(R.id.textView);
         listOfCustomerServices = findViewById(R.id.listOfCustomerServices);
+        listOfCustomerServices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(listOfServicesCustomer.this,ServiceApplication.class));
+            }
+        });
 
     }
     @Override

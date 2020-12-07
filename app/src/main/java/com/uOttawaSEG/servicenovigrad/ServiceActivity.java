@@ -48,8 +48,6 @@ public class ServiceActivity extends AppCompatActivity {
 
         databaseService= FirebaseDatabase.getInstance().getReference("Services").child(getIntent().getStringExtra("SERVICE"));
 
-
-
         requirementsListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -201,14 +199,6 @@ public class ServiceActivity extends AppCompatActivity {
                     branchRef.child(branchID).child("services").child(getIntent().getStringExtra("SERVICE")).removeValue();
 
                 }
-
-
-
-                //RequirementList sAdapter = new RequirementList(ServiceActivity.this, requirementsID,reqInfo);
-
-                //requirementsListview.setAdapter(sAdapter);
-
-                //title.setText(dataSnapshot.child("name").getValue().toString());
             }
 
 

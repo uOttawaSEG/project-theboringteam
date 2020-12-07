@@ -1,20 +1,18 @@
-/**package com.uOttawaSEG.servicenovigrad;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+package com.uOttawaSEG.servicenovigrad;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,56 +22,93 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
+public class ServiceApplication extends AppCompatActivity {
 
-public class ServiceApplication extends AppCompatActivity{
-    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-    LayoutInflater inflater = getLayoutInflater();
-    final View dialogView = inflater.inflate(R.layout.activity_addservice_dialog, null);
-        dialogBuilder.setView(dialogView);
+    DatabaseReference databaseRequirements;
+    ListView listViewRequirements;
+    ArrayList<String> requirementsID = new ArrayList();
+    HashMap<String, String> reqInfo= new HashMap<>();
 
-    final EditText editTextName = dialogView.findViewById(R.id.editTextName);
-    final Button buttonCancel = dialogView.findViewById(R.id.buttonCancel);
-    final Button buttonCreate = dialogView.findViewById(R.id.buttonCreate);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_service_application);
 
-        dialogBuilder.setTitle("New Service");
-    final AlertDialog b = dialogBuilder.create();
-        b.show();
+        listViewRequirements = findViewById(R.id.listViewRequirements);
 
-        buttonCreate.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String name = editTextName.getText().toString().trim();
-            if (!TextUtils.isEmpty(name)) {
-                //getting a unique id using push().getKey() method
-                //it will create a unique id and we will use it as the primary key for our product
-                String id = databaseServices.push().getKey();
+        databaseRequirements= FirebaseDatabase.getInstance().getReference("Services").child("-MMsCR4Lt3JkvQj2Ynxy");
 
-                //creating a Product object
-                Service service = new Service(name,id);
-                //saving the product
-                databaseServices.child(id).setValue(service);
+        listViewRequirements.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String selected = requirementsID.get(i);
+                if(selected == null){
+                    toastMessage("broken");
+                    return false;
+                }
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ServiceApplication.this);
+                LayoutInflater inflater = getLayoutInflater();
+                final View dialogView = inflater.inflate(R.layout.dialog_update_user_info, null);
+                dialogBuilder.setView(dialogView);
 
-                //
-                services.add(service);
+                final EditText edtInfo = dialogView.findViewById(R.id.info);
+                final Button buttonUpdate = dialogView.findViewById(R.id.buttonUpdate);
 
-                //displaying a success toast
-                toastMessage("Product added");
-                b.dismiss();
-            }else{
-                //if the value is not given displaying a toast
-                toastMessage("Please enter a name");
+                dialogBuilder.setTitle("GET THIS REQUIREMENT NAME FROM DATABASE");
+
+                buttonUpdate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        updateUserInfo(edtInfo.getText().toString());
+                    }
+                });
+                final AlertDialog b = dialogBuilder.create();
+                b.show();
+
+                return true;
             }
-        }
-    });
+        });
 
-        buttonCancel.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            b.dismiss();
-        }
-    });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //attaching value listener event
+        databaseRequirements.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                requirementsID.clear();
+                reqInfo.clear();
+
+                if(!dataSnapshot.exists()){
+                    return;
+                }
+
+                for(DataSnapshot postSnapshot : dataSnapshot.child("reqInfo").getChildren()) {
+                    String req = postSnapshot.getKey();
+                    reqInfo.put(req,req);
+                    requirementsID.add(req);
+                }
+
+                RequirementList sAdapter = new RequirementList(ServiceApplication.this, requirementsID,reqInfo);
+                listViewRequirements.setAdapter(sAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error){}
+        });
+
+    }
+
+    public void updateUserInfo(String information){
+        //GET INFO FROM DATABASE HERE
+        toastMessage("Your " + "info from database" +" is " + information);
+        //WRITE INFO TO FIREBASE HERE
+    }
+
+    private void toastMessage(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
 }
-*/
