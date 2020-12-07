@@ -207,11 +207,11 @@ public class ServiceActivity extends AppCompatActivity {
 
 
 
-                RequirementList sAdapter = new RequirementList(ServiceActivity.this, requirementsID,reqInfo);
+                //RequirementList sAdapter = new RequirementList(ServiceActivity.this, requirementsID,reqInfo);
 
-                requirementsListview.setAdapter(sAdapter);
+                //requirementsListview.setAdapter(sAdapter);
 
-                title.setText(dataSnapshot.child("name").getValue().toString());
+                //title.setText(dataSnapshot.child("name").getValue().toString());
             }
 
 

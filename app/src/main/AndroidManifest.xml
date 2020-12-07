@@ -24,12 +24,15 @@
         </activity>
 
         <activity android:name=".ChooseBranch" />
+        <activity android:name=".ServiceRequests" />
         <activity android:name=".welcomescreen_branch" />
         <activity android:name=".ServiceActivity" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".ChooseTypeActivity" />
         <activity android:name=".welcomescreen_customer" />
         <activity android:name=".branchHours" />
+        <activity android:name=".customerRequestService" />
+        <activity android:name=".listOfServicesCustomer" />
     </application>
 
 </manifest>

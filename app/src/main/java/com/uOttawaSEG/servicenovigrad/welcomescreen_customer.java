@@ -226,28 +226,14 @@ public class welcomescreen_customer extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
     }
+
 
 
     private void toastMessage(String message) {
         Toast.makeText(this, message,Toast.LENGTH_SHORT).show();
     }
-
-    //class for getting service clicked
-    public class ItemClicked{
-        private String _id;
-        public ItemClicked(){}
-        public ItemClicked(String id){
-            _id = id;
-        }
-        public void setID(String id){
-            _id = id;
-        }
-        public String getID(){
-            return _id;
-        }
-    }
+    
 
 
 }
