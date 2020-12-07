@@ -92,7 +92,7 @@ public class welcomescreen_customer extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Branch branch = searchedBranches.get(i);
                 Intent intent = new Intent(welcomescreen_customer.this, listOfServicesCustomer.class);
-                intent.putExtra("BrancheID", branch.getId());
+                intent.putExtra("BranchID", branch.getId());
                 startActivity(intent);
                 return true;
             }
