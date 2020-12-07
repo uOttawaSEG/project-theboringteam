@@ -28,7 +28,7 @@ public class ServiceApplication extends AppCompatActivity {
     DatabaseReference databaseRequirements;
     ListView listViewRequirements;
     ArrayList<String> requirementsID = new ArrayList();
-    HashMap<String, String> reqInfo= new HashMap<>();
+    //HashMap<String, String> reqInfo= new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class ServiceApplication extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 requirementsID.clear();
-                reqInfo.clear();
+                //reqInfo.clear();
 
                 if(!dataSnapshot.exists()){
                     return;
@@ -88,7 +88,7 @@ public class ServiceApplication extends AppCompatActivity {
 
                 for(DataSnapshot postSnapshot : dataSnapshot.child("reqInfo").getChildren()) {
                     String req = postSnapshot.getKey();
-                    reqInfo.put(req,req);
+                    //reqInfo.put(req,req);
                     requirementsID.add(req);
                 }
 
