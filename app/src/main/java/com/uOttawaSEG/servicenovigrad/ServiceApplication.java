@@ -54,13 +54,13 @@ public class ServiceApplication extends AppCompatActivity {
 
                 final EditText edtInfo = dialogView.findViewById(R.id.info);
                 final Button buttonUpdate = dialogView.findViewById(R.id.buttonUpdate);
-
-                dialogBuilder.setTitle("GET THIS REQUIREMENT NAME FROM DATABASE");
+                final String requirementsName = requirementsID.get(i);
+                dialogBuilder.setTitle("Update " + requirementsID.get(i));
 
                 buttonUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        updateUserInfo(edtInfo.getText().toString());
+                        updateUserInfo(edtInfo.getText().toString(),requirementsName);
                     }
                 });
                 final AlertDialog b = dialogBuilder.create();
@@ -102,9 +102,8 @@ public class ServiceApplication extends AppCompatActivity {
 
     }
 
-    public void updateUserInfo(String information){
-        //GET INFO FROM DATABASE HERE
-        toastMessage("Your " + "info from database" +" is " + information);
+    public void updateUserInfo(String information,String requirementName){
+        toastMessage("Your " + requirementName +" is " + information);
         //WRITE INFO TO FIREBASE HERE
     }
 
