@@ -8,7 +8,7 @@ class User {
     private String _name;
     private String _email;
     private String _type;
-    private String branch_id;
+    private String _branch_id;
     private HashMap<String, String> _information;
 
     public User(){
@@ -17,6 +17,7 @@ class User {
 
     public User(String id, String name, String email, String type){
         _id = id;
+        //_branch_id = branch_id;
         _name = name;
         _email = email;
         _type = type;
@@ -58,14 +59,9 @@ class User {
         _information.remove(name);
     }
     public void setBranch(String id){
-        if(_type.equals("employee")){
-            this.branch_id = id;
-        }
-        else{
-            return;
-        }
+        this._branch_id = id;
     }
     public String getBranch(){
-        return this.branch_id;
+        return this._branch_id;
     }
 }
