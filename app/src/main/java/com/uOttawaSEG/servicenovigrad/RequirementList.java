@@ -8,20 +8,19 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class RequirementList extends ArrayAdapter<Service> {
     private Activity context;
-    ArrayList requirements;
-    HashMap<String,String> reqInfo;
+    ArrayList<String> requirements;
 
 
-    public RequirementList(Activity context, ArrayList<String> requirements,HashMap reqInfo) {
+    public RequirementList(Activity context, ArrayList<String> requirements) {
         super(context, R.layout.activity_list,new ArrayList(requirements));
         this.context = context;
         this.requirements = requirements;
-        this.reqInfo = reqInfo;
 
     }
 
@@ -33,7 +32,7 @@ public class RequirementList extends ArrayAdapter<Service> {
 
 
 
-        String requirement = reqInfo.get(requirements.get(position));
+        String requirement = requirements.get(position);
         //reqInfo.get(requirements.get(position))
         textViewName.setText(requirement);
         return listViewItem;

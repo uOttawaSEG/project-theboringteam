@@ -110,7 +110,7 @@ public class ServiceActivity extends AppCompatActivity {
 
 
 
-                RequirementList sAdapter = new RequirementList(ServiceActivity.this, requirementsID,reqInfo);
+                RequirementList sAdapter = new RequirementList(ServiceActivity.this, requirementsID);
 
                 requirementsListview.setAdapter(sAdapter);
 

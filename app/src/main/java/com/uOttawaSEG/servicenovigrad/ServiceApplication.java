@@ -1,4 +1,4 @@
-/**package com.uOttawaSEG.servicenovigrad;
+package com.uOttawaSEG.servicenovigrad;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -76,4 +76,3 @@ public class ServiceApplication extends AppCompatActivity{
         }
     });
 }
-*/
