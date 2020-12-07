@@ -37,7 +37,8 @@ public class ServiceApplication extends AppCompatActivity {
 
         listViewRequirements = findViewById(R.id.listViewRequirements);
 
-        databaseRequirements= FirebaseDatabase.getInstance().getReference("Services").child("-MMsCR4Lt3JkvQj2Ynxy");
+        final String serviceID = getIntent().getStringExtra("serviceID");
+        databaseRequirements = FirebaseDatabase.getInstance().getReference("Services").child(serviceID);
 
         listViewRequirements.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -60,7 +61,7 @@ public class ServiceApplication extends AppCompatActivity {
                 buttonUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        updateUserInfo(edtInfo.getText().toString(),requirementsName);
+                        updateUserInfo(edtInfo.getText().toString(),requirementsName,serviceID);
                     }
                 });
                 final AlertDialog b = dialogBuilder.create();
@@ -102,9 +103,10 @@ public class ServiceApplication extends AppCompatActivity {
 
     }
 
-    public void updateUserInfo(String information,String requirementName){
+    public void updateUserInfo(String information,String requirementName, String serviceID){
         toastMessage("Your " + requirementName +" is " + information);
-        //WRITE INFO TO FIREBASE HERE
+        DatabaseReference databaseRequirements =null;
+
     }
 
     private void toastMessage(String message) {
