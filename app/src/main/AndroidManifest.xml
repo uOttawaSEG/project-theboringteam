@@ -31,6 +31,8 @@
         <activity android:name=".ChooseTypeActivity" />
         <activity android:name=".welcomescreen_customer" />
         <activity android:name=".branchHours" />
+        <activity android:name=".customerRequestService" />
+        <activity android:name=".listOfServicesCustomer" />
     </application>
 
 </manifest>

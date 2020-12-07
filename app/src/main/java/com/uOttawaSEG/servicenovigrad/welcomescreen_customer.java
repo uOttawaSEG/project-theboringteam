@@ -21,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 public class welcomescreen_customer extends AppCompatActivity {
 
     public TextView welcomeName, welcomeType;
-    public Button logOut;
+    public Button logOut, btnChooseBranch;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference usersDatabase;
@@ -37,7 +37,7 @@ public class welcomescreen_customer extends AppCompatActivity {
         welcomeName = findViewById(R.id.welcomeMessageName);
         welcomeType = findViewById(R.id.info);
         logOut = findViewById(R.id.backServices);
-
+        btnChooseBranch = findViewById(R.id.btnChooseBranch);
         // ### FIREBASE STUFF ###
         mAuth = FirebaseAuth.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -70,7 +70,14 @@ public class welcomescreen_customer extends AppCompatActivity {
                 startActivity(new Intent(welcomescreen_customer.this, MainActivity.class));
             }
         });
+        btnChooseBranch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(welcomescreen_customer.this, customerRequestService.class));
+            }
+        });
     }
+
 
 
     private void toastMessage(String message) {
