@@ -10,7 +10,7 @@ import java.util.List;
 public class Service{
     private String name;
     private HashMap reqInfo;
-    private int nextReq;
+    //private int nextReq;
     private String id;
 
     public Service(){}
@@ -19,13 +19,13 @@ public class Service{
         this.name = name;
         this.id = id;
         reqInfo = new HashMap<String,String>();
-        nextReq = 0 ;
+        //nextReq = 0 ;
     }
 
-    public Service(String name, HashMap reqInfo,int nextReq, String id){
+    public Service(String name, HashMap reqInfo, String id){
         this.name = name;
         this.reqInfo = reqInfo;
-        this.nextReq = nextReq;
+        //this.nextReq = nextReq;
         this.id = id;
     }
 
@@ -33,9 +33,9 @@ public class Service{
         return name;
     }
 
-    public void addInfo(String requiremnt){
-        reqInfo.put(Integer.toString(nextReq),requiremnt);
-        nextReq++;
+    public void addInfo(String requirement){
+        reqInfo.put(requirement,requirement);
+        //nextReq++;
     }
 
     public String getRequiremnt(String key){
@@ -48,7 +48,7 @@ public class Service{
         reqInfo.remove(index);
     }
 
-    public Integer getNextReq(){return nextReq;}
+    //public Integer getNextReq(){return nextReq;}
 
     public HashMap<Integer,String> getReqInfo(){return reqInfo;}
 

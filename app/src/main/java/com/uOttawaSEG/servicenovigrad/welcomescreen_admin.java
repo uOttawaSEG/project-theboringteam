@@ -79,19 +79,18 @@ public class welcomescreen_admin extends AppCompatActivity {
                     //getting product
                     String nameS = postSnapshot.child("name").getValue(String.class);
                     HashMap<String,String> reqInfo = new HashMap<>();
-                    int nextReq = Integer.parseInt((postSnapshot.child("nextReq").getValue().toString()));
                     String id = postSnapshot.child("id").getValue(String.class);
 
                     try {
                         for (DataSnapshot postpostSnapshot : postSnapshot.child("reqInfo").getChildren()) {
-                            reqInfo.put(postpostSnapshot.getKey(), postpostSnapshot.getValue(String.class));
+                            reqInfo.put(postpostSnapshot.getKey(),postpostSnapshot.getKey());
 
                         }
                     }catch(Exception e){
                         toastMessage("error loading data");
                     }
 
-                    Service service = new Service(nameS, reqInfo,nextReq,id);
+                    Service service = new Service(nameS, reqInfo,id);
                     services.add(service);
 
                 }

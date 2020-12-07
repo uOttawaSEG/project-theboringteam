@@ -34,7 +34,6 @@ public class ServiceActivity extends AppCompatActivity {
 
     ArrayList<String> requirementsID = new ArrayList();
     HashMap<String, String> reqInfo= new HashMap<>();
-    String nextReq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,12 +100,10 @@ public class ServiceActivity extends AppCompatActivity {
                     return;
                 }
 
-                nextReq = dataSnapshot.child("nextReq").getValue().toString();
-
                 for(DataSnapshot postSnapshot : dataSnapshot.child("reqInfo").getChildren()) {
 
                     String req = postSnapshot.getKey();
-                    reqInfo.put(req,postSnapshot.getValue().toString());
+                    reqInfo.put(req,req);
                     requirementsID.add(req);
 
                 }
@@ -160,12 +157,12 @@ public class ServiceActivity extends AppCompatActivity {
                 String name = editTextName.getText().toString().trim();
                 if (!TextUtils.isEmpty(name)) {
 
-                    requirementsID.add(nextReq);
-                    reqInfo.put(nextReq,name);
+                    requirementsID.add(name);
+                    reqInfo.put(name,name);
 
-                    databaseService.child("reqInfo").child(nextReq).setValue(name);
+                    databaseService.child("reqInfo").child(name).setValue(name);
 
-                    databaseService.child("nextReq").setValue((new Integer(Integer.valueOf(nextReq).intValue()+1)).toString());
+                    //databaseService.child("nextReq").setValue((new Integer(Integer.valueOf(nextReq).intValue()+1)).toString());
 
                     //displaying a success toast
                     toastMessage("Service added");
