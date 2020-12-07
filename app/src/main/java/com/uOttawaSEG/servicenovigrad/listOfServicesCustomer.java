@@ -43,7 +43,7 @@ public class listOfServicesCustomer extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        String branchID = "-MNuflpifDbyatZxrmyT";
+        String branchID = getIntent().getStringExtra("BranchID");
         servicesDB = FirebaseDatabase.getInstance().getReference("Branches").child(branchID).child("services");
         servicesDB.addValueEventListener(new ValueEventListener() {
             @Override

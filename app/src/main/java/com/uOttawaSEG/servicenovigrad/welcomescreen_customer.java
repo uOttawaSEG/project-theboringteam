@@ -1,9 +1,11 @@
 package com.uOttawaSEG.servicenovigrad;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -82,6 +84,17 @@ public class welcomescreen_customer extends AppCompatActivity {
                 String searchHours = searchFieldHours.getText().toString();
                 String searchServiceId = serviceQuery;
                 firebaseServiceSearch(searchHours, searchAddress, searchServiceId);
+            }
+        });
+
+        listViewBranches.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Branch branch = searchedBranches.get(i);
+                Intent intent = new Intent(welcomescreen_customer.this, listOfServicesCustomer.class);
+                intent.putExtra("BrancheID", branch.getId());
+                startActivity(intent);
+                return true;
             }
         });
 
@@ -233,7 +246,7 @@ public class welcomescreen_customer extends AppCompatActivity {
     private void toastMessage(String message) {
         Toast.makeText(this, message,Toast.LENGTH_SHORT).show();
     }
-    
+
 
 
 }
