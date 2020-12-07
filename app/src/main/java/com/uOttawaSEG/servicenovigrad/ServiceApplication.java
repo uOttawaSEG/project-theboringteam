@@ -37,7 +37,8 @@ public class ServiceApplication extends AppCompatActivity {
 
         listViewRequirements = findViewById(R.id.listViewRequirements);
 
-        databaseRequirements= FirebaseDatabase.getInstance().getReference("Services").child("-MMsCR4Lt3JkvQj2Ynxy");
+        final String serviceID = getIntent().getStringExtra("serviceID");
+        databaseRequirements = FirebaseDatabase.getInstance().getReference("Services").child(serviceID);
 
         listViewRequirements.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -54,13 +55,13 @@ public class ServiceApplication extends AppCompatActivity {
 
                 final EditText edtInfo = dialogView.findViewById(R.id.info);
                 final Button buttonUpdate = dialogView.findViewById(R.id.buttonUpdate);
-
-                dialogBuilder.setTitle("GET THIS REQUIREMENT NAME FROM DATABASE");
+                final String requirementsName = requirementsID.get(i);
+                dialogBuilder.setTitle("Update " + requirementsID.get(i));
 
                 buttonUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        updateUserInfo(edtInfo.getText().toString());
+                        updateUserInfo(edtInfo.getText().toString(),requirementsName,serviceID);
                     }
                 });
                 final AlertDialog b = dialogBuilder.create();
@@ -102,10 +103,10 @@ public class ServiceApplication extends AppCompatActivity {
 
     }
 
-    public void updateUserInfo(String information){
-        //GET INFO FROM DATABASE HERE
-        toastMessage("Your " + "info from database" +" is " + information);
-        //WRITE INFO TO FIREBASE HERE
+    public void updateUserInfo(String information,String requirementName, String serviceID){
+        toastMessage("Your " + requirementName +" is " + information);
+        DatabaseReference databaseRequirements =null;
+
     }
 
     private void toastMessage(String message) {

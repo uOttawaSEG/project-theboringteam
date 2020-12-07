@@ -31,7 +31,6 @@ public class listOfServicesCustomer extends AppCompatActivity {
     ListView listOfCustomerServices;
     TextView textView;
     private DatabaseReference servicesDB;
-    final List<Service> services = new ArrayList<>();
     final List<Service> listServicesBranch = new ArrayList<Service>();
 
     @Override
@@ -44,7 +43,9 @@ public class listOfServicesCustomer extends AppCompatActivity {
         listOfCustomerServices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(listOfServicesCustomer.this,ServiceApplication.class));
+                Intent intent = new Intent(listOfServicesCustomer.this,ServiceApplication.class);
+                intent.putExtra("serviceID", listServicesBranch.get(position).getId());
+                startActivity(intent);
             }
         });
 
