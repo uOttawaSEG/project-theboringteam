@@ -2,6 +2,7 @@ package com.uOttawaSEG.servicenovigrad;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,7 +40,9 @@ public class ServiceRequestsBranch extends AppCompatActivity {
             listViewRequests.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    startActivity(new Intent(ServiceRequestsBranch.this, RequestDisplay.class));
+                    Intent intent = new Intent(ServiceRequestsBranch.this, RequestDisplay.class);
+                    intent.putExtra("requestID", requests.get(i).getRequestID());
+                    startActivity(intent);
                     return true;
                 }
             });
@@ -50,7 +53,7 @@ public class ServiceRequestsBranch extends AppCompatActivity {
         protected void onStart() {
             super.onStart();
 
-            databaseRequirements = FirebaseDatabase.getInstance().getReference("ServiceRequests");
+            databaseRequirements = FirebaseDatabase.getInstance().getReference("Requests");
             databaseRequirements.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -61,7 +64,8 @@ public class ServiceRequestsBranch extends AppCompatActivity {
                             String userID = postSnapshot.child("userID").getValue(String.class);
                             String branchID = postSnapshot.child("branchID").getValue(String.class);
                             String serviceID = postSnapshot.child("serviceID").getValue(String.class);
-                            String requestID = postSnapshot.child("requestID").getValue(String.class);
+                            String requestID = postSnapshot.getKey();
+
 
                             ServiceRequest tempRequest = new ServiceRequest(requestID,userID,branchID,serviceID);
                             requests.add(tempRequest);
