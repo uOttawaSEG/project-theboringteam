@@ -86,6 +86,15 @@ public class projectboringteamTESTS {
         assertEquals(tester.getType(),expectedTesterType);
         assertEquals(tester.getBranch(),expectedTesterBranch);
         assertEquals(tester.getInfo("phone_number"),expectedTesterPhoneNumber);
+    }
 
+    @Test
+    public void ServiceTest() {
+        Service tester = new Service("Chris","Ishan" );
+        String expectedName = "Chris";
+        String expectedID = "Ishan";
+
+        assertEquals(tester.getName(),expectedName);
+        assertEquals(tester.getId(),expectedID);
     }
 }
