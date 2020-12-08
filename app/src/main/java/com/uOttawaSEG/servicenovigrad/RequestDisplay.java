@@ -87,13 +87,13 @@ public class RequestDisplay extends AppCompatActivity {
 
     private void approveRequest(String requestID){
 
-        DatabaseReference requestedDB = FirebaseDatabase.getInstance().getReference("ServiceRequests").child(requestID);
+        DatabaseReference requestedDB = FirebaseDatabase.getInstance().getReference("Requests").child(requestID);
         requestedDB.child("status").setValue("approved");
     }
 
     private void denyRequest(String requestID){
 
-        DatabaseReference requestedDB = FirebaseDatabase.getInstance().getReference("ServiceRequests").child(requestID);
+        DatabaseReference requestedDB = FirebaseDatabase.getInstance().getReference("Requests").child(requestID);
         requestedDB.removeValue();
     }
 
