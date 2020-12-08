@@ -7,15 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".ServiceApplication">
 
+
     <ListView
         android:id="@+id/listViewRequirements"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="60dp"
         android:layout_marginBottom="200dp"
         android:background="@color/colorAccent"
         android:textSize="18sp"
         tools:layout_marginBottom="50dp"
-        tools:textColor="#FFFFFF"/>
+        tools:textColor="#FFFFFF">
+    </ListView>
 
 </RelativeLayout>
