@@ -101,6 +101,10 @@ public class ServiceRequest{
         }
     }
 
+    public HashMap<String,String> getInfo(){
+        return info;
+    }
+
     public void updateInfo(String infoType, String information){
         this.info.put(infoType,information);
     }

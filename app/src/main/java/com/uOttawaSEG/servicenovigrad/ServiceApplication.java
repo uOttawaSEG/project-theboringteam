@@ -136,6 +136,7 @@ public class ServiceApplication extends AppCompatActivity {
         String iD = requestDB.push().getKey();
         request.setRequestID(iD);
         requestDB.child(iD).setValue(request);
+        requestDB.child(iD).child("info").setValue(request.getInfo());
 
         finish();
 
