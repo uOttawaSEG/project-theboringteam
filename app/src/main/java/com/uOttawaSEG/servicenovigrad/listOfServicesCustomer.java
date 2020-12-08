@@ -31,6 +31,7 @@ public class listOfServicesCustomer extends AppCompatActivity {
     ListView listOfCustomerServices;
     TextView textView;
     private DatabaseReference servicesDB;
+    private String branchID;
     final List<Service> listServicesBranch = new ArrayList<Service>();
 
     @Override
@@ -39,11 +40,13 @@ public class listOfServicesCustomer extends AppCompatActivity {
         setContentView(R.layout.list_of_services_customer);
 
         textView = findViewById(R.id.textView);
+        branchID = getIntent().getStringExtra("BranchID");
         listOfCustomerServices = findViewById(R.id.listOfCustomerServices);
         listOfCustomerServices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(listOfServicesCustomer.this,ServiceApplication.class);
+                intent.putExtra("branchID", branchID);
                 intent.putExtra("serviceID", listServicesBranch.get(position).getId());
                 startActivity(intent);
             }
@@ -53,7 +56,6 @@ public class listOfServicesCustomer extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        String branchID = getIntent().getStringExtra("BranchID");
         servicesDB = FirebaseDatabase.getInstance().getReference("Branches").child(branchID).child("services");
         servicesDB.addValueEventListener(new ValueEventListener() {
             @Override

@@ -8,7 +8,7 @@
     tools:context=".ServiceApplication">
 
     <ListView
-        android:id="@+id/listViewRequirements"
+        android:id="@+id/listViewRequests"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"
@@ -20,12 +20,14 @@
 
     </ListView>
 
-    <Button
-        android:id="@+id/sendRequest"
+    <TextView
+        android:id="@+id/requestsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:text="Send Request" />
+        android:layout_marginTop="35dp"
+        android:text="Choose a request to review"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
 
 </RelativeLayout>

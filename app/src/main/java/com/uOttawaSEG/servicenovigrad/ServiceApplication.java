@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +30,8 @@ public class ServiceApplication extends AppCompatActivity {
     DatabaseReference databaseRequirements;
     ListView listViewRequirements;
     ArrayList<String> requirementsID = new ArrayList();
-    //HashMap<String, String> reqInfo= new HashMap<>();
+    ServiceRequest request;
+    Button send;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +39,12 @@ public class ServiceApplication extends AppCompatActivity {
         setContentView(R.layout.activity_service_application);
 
         listViewRequirements = findViewById(R.id.listViewRequirements);
+        send = findViewById(R.id.sendRequest);
 
         final String serviceID = getIntent().getStringExtra("serviceID");
+        final String branchID = getIntent().getStringExtra("branchID");
+        request = new ServiceRequest(FirebaseAuth.getInstance().getCurrentUser().getUid(),branchID,serviceID);
+
         databaseRequirements = FirebaseDatabase.getInstance().getReference("Services").child(serviceID);
 
         listViewRequirements.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -61,13 +68,20 @@ public class ServiceApplication extends AppCompatActivity {
                 buttonUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        updateUserInfo(edtInfo.getText().toString(),requirementsName,serviceID);
+                        updateUserInfo(edtInfo.getText().toString(),requirementsName);
                     }
                 });
                 final AlertDialog b = dialogBuilder.create();
                 b.show();
 
                 return true;
+            }
+        });
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendRequest();
             }
         });
 
@@ -81,7 +95,7 @@ public class ServiceApplication extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 requirementsID.clear();
-                //reqInfo.clear();
+
 
                 if(!dataSnapshot.exists()){
                     return;
@@ -89,7 +103,6 @@ public class ServiceApplication extends AppCompatActivity {
 
                 for(DataSnapshot postSnapshot : dataSnapshot.child("reqInfo").getChildren()) {
                     String req = postSnapshot.getKey();
-                    //reqInfo.put(req,req);
                     requirementsID.add(req);
                 }
 
@@ -103,11 +116,29 @@ public class ServiceApplication extends AppCompatActivity {
 
     }
 
-    public void updateUserInfo(String information,String requirementName, String serviceID){
-        toastMessage("Your " + requirementName +" is " + information);
-        DatabaseReference databaseRequirements =null;
+    public void updateUserInfo(String information,String requirementName){
+        if(information.equals("")){
+            toastMessage("Your " + requirementName +" information has been cleared");
+            request.removeInfo(requirementName);
+        }
+        else{
+            toastMessage("Your " + requirementName +" is now " + information);
+            request.updateInfo(requirementName,information);
+        }
 
     }
+
+    public void sendRequest(){
+
+        final DatabaseReference requestDB = FirebaseDatabase.getInstance().getReference("Requests");
+
+        String iD = requestDB.push().getKey();
+        request.setRequestID(iD);
+        requestDB.child(iD).setValue(request);
+
+    }
+
+
 
     private void toastMessage(String message) {
         Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
