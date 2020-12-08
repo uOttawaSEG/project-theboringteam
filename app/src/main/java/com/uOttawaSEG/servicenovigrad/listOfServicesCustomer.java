@@ -1,5 +1,6 @@
 package com.uOttawaSEG.servicenovigrad;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ public class listOfServicesCustomer extends AppCompatActivity {
 
     ListView listOfCustomerServices;
     TextView textView;
+    Button rateBranchButton;
     private DatabaseReference servicesDB;
     private String branchID;
     final List<Service> listServicesBranch = new ArrayList<Service>();
@@ -41,6 +44,7 @@ public class listOfServicesCustomer extends AppCompatActivity {
 
         textView = findViewById(R.id.textView);
         branchID = getIntent().getStringExtra("BranchID");
+        rateBranchButton = findViewById(R.id.rateBranchButton);
         listOfCustomerServices = findViewById(R.id.listOfCustomerServices);
         listOfCustomerServices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -49,6 +53,38 @@ public class listOfServicesCustomer extends AppCompatActivity {
                 intent.putExtra("branchID", branchID);
                 intent.putExtra("serviceID", listServicesBranch.get(position).getId());
                 startActivity(intent);
+            }
+        });
+
+        rateBranchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = "Rate this branch + firebase";
+                final float[] userRating = new float[1];
+                final Dialog rankDialog = new Dialog(listOfServicesCustomer.this);
+                rankDialog.setContentView(R.layout.dialog_ranking);
+                rankDialog.setCancelable(true);
+                final RatingBar ratingBar = (RatingBar)rankDialog.findViewById(R.id.ratingBar);
+                ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                    @Override
+                    public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                        userRating[0] = rating;
+                    }
+                });
+
+                TextView text = (TextView) rankDialog.findViewById(R.id.rank_branch);
+                text.setText(name);
+
+                Button updateButton = (Button) rankDialog.findViewById(R.id.rank_dialog_button);
+
+                updateButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        rankDialog.dismiss();
+                        toastMessage("The number of stars is " + userRating[0]);
+                    }
+                });
+                rankDialog.show();
             }
         });
 
@@ -76,6 +112,9 @@ public class listOfServicesCustomer extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error){}
         });
 
+    }
+    private void toastMessage(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
 }
