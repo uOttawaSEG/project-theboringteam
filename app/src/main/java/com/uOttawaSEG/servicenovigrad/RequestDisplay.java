@@ -25,16 +25,16 @@ import java.util.ArrayList;
 
 public class RequestDisplay extends AppCompatActivity {
 
-    String requestID = getIntent().getStringExtra("requestID");
     ListView listViewRequestInfo;
     ArrayList<String> info = new ArrayList();
-
+    String requestID;
     Button approve, deny;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_display);
+        requestID = getIntent().getStringExtra("requestID");
 
         listViewRequestInfo = findViewById(R.id.listViewRequestInfo);
         deny = findViewById(R.id.Deny);
@@ -60,7 +60,7 @@ public class RequestDisplay extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        DatabaseReference requestedDB = FirebaseDatabase.getInstance().getReference("ServiceRequests").child(requestID);
+        DatabaseReference requestedDB = FirebaseDatabase.getInstance().getReference("Requests").child(requestID);
         requestedDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

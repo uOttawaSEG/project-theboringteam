@@ -18,14 +18,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Send Request" />
+            android:text="Approve Request" />
 
         <Button
             android:id="@+id/Deny"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Send Request" />
+            android:text="Deny Request" />
     </LinearLayout>
 
     <ListView
